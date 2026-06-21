@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#3E2723">
+
+  <!-- Primary SEO Meta Tags -->
+  <title>Thảo Sâm Bakery — Đặt bánh kem & Thức uống giao nhanh</title>
+  <meta name="title" content="Thảo Sâm Bakery — Đặt bánh kem & Thức uống giao nhanh">
+  <meta name="description"
+    content="Tiệm bánh kem Thảo Sâm Bakery chuyên các loại bánh sinh nhật độc đáo, bánh ngọt sự kiện tại Cẩm Giàng. Đặt món giao tận nơi tiện lợi qua Zalo.">
+  <meta name="keywords"
+    content="Thảo Sâm Bakery, bánh sinh nhật Cẩm Giàng, đặt bánh kem Cẩm Giàng, bánh sinh nhật Cẩm Giàng, bánh ngọt sự kiện, cà phê, nước ép trái cây">
+  <meta name="author" content="Thảo Sâm Bakery">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://thaosambakery.netlify.app/">
+  <meta property="og:title" content="Thảo Sâm Bakery — Đặt bánh kem & Thức uống giao nhanh">
+  <meta property="og:description"
+    content="Tiệm bánh kem Thảo Sâm Bakery chuyên các loại bánh sinh nhật độc đáo, bánh ngọt sự kiện tại Cẩm Giàng. Đặt món giao tận nơi tiện lợi qua Zalo.">
+  <meta property="og:image" content="logo.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://thaosambakery.netlify.app/">
+  <meta property="twitter:title" content="Thảo Sâm Bakery — Đặt bánh kem & Thức uống giao nhanh">
+  <meta property="twitter:description"
+    content="Tiệm bánh kem Thảo Sâm Bakery chuyên các loại bánh sinh nhật độc đáo, bánh ngọt sự kiện tại Cẩm Giàng. Đặt món giao tận nơi tiện lợi qua Zalo.">
+  <meta property="twitter:image" content="logo.png">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+
+  <div class="container">
+
+    <!-- ===================== TOP BAR (STICKY HEADER) ===================== -->
+    <header class="topbar" id="topbar">
+      <div class="logo-wrapper">
+        <img class="logo" src="logo.png" alt="Thảo Sâm Bakery Logo" id="topbarLogo">
+      </div>
+      <div class="brand-info">
+        <h1 class="brand-name brand-font">Thảo Sâm Bakery</h1>
+        <div class="brand-sub">Bánh sinh nhật & Coffee</div>
+      </div>
+      <button class="tb-cart-btn" id="tbCartBtn" onclick="openCart()" aria-label="Giỏ hàng">
+        <svg viewBox="0 0 24 24">
+          <circle cx="9" cy="21" r="1"></circle>
+          <circle cx="20" cy="21" r="1"></circle>
+          <path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"></path>
+        </svg>
+        <span class="badge" id="tbBadge">0</span>
+      </button>
+    </header>
+
+    <main>
+      <!-- ===================== HERO SECTION ===================== -->
+      <section class="hero" id="heroSection">
+        <div class="hero-inner">
+          <div class="hero-logo-box">
+            <img src="logo.png" alt="Thảo Sâm Bakery Circular Logo">
+          </div>
+          <div class="hero-text">
+            <h2 class="brand-font">Thảo Sâm Bakery</h2>
+            <div class="tag">Bánh Kem Nghệ Thuật & Đồ Uống Tươi Sạch</div>
+            <div class="rating">
+              <span class="rating-star">★</span>
+              <span>4.9 (500+ đánh giá)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick actions dial -->
+        <div class="quick-actions">
+          <button class="quick-btn" onclick="scrollToMenu()">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+            <span>Đặt ngay</span>
+          </button>
+          <a class="quick-btn" id="footerCallQuick" href="tel:0385535482">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+              </path>
+            </svg>
+            <span>Gọi tiệm</span>
+          </a>
+          <a class="quick-btn" href="https://zalo.me/0385535482" target="_blank">
+            <svg viewBox="0 0 24 24">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+            <span>Zalo Chat</span>
+          </a>
+          <a class="quick-btn" href="https://maps.app.goo.gl/Z78Q4PSavWatnrLUA" target="_blank">
+            <svg viewBox="0 0 24 24">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span>Tìm đường</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- ===================== SEARCH & FILTER BAR ===================== -->
+      <section class="search-container">
+        <div class="search-box">
+          <input type="text" id="searchInput" class="search-input" placeholder="Tìm kiếm bánh kem, cà phê, nước ép...">
+          <svg class="search-icon" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <button class="clear-btn" id="clearSearchBtn">&times;</button>
+        </div>
+      </section>
+
+      <!-- ===================== STICKY CATEGORY TABS ===================== -->
+      <div class="tabs-outer" id="tabsOuter">
+        <div class="tabs-container" id="tabsContainer">
+          <!-- Dynamic category tabs will render here -->
+        </div>
+      </div>
+
+      <!-- ===================== DYNAMIC MENU LIST ===================== -->
+      <section class="menu-sections" id="menuSections">
+        <!-- Dynamic product items grid will render here -->
+      </section>
+    </main>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="footer">
+      <div class="f-brand">
+        <img class="f-logo" src="logo.png" alt="Thảo Sâm Bakery Footer Logo">
+        <h2 class="f-title brand-font">Thảo Sâm Bakery</h2>
+      </div>
+      <div class="f-line">
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        <span>Mở cửa: 07:30 - 22:00 hàng ngày</span>
+      </div>
+      <a class="f-line" id="footerCall" href="tel:0385535482">
+        <svg viewBox="0 0 24 24">
+          <path
+            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+          </path>
+        </svg>
+        <span id="footerCallTxt">0385535482</span>
+      </a>
+      <a class="f-line" id="footerZalo" href="https://zalo.me/0385535482" target="_blank">
+        <svg viewBox="0 0 24 24">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+        <span>Zalo Tư Vấn: Đặt Bánh Theo Yêu Cầu</span>
+      </a>
+      <div class="f-line">
+        <svg viewBox="0 0 24 24">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+          <circle cx="12" cy="10" r="3"></circle>
+        </svg>
+        <span>Địa chỉ: Cổng VSIP, Bái Dương, Cẩm Giàng, Hải Phòng</span>
+      </div>
+      <a class="f-map-btn" id="footerMap" href="https://maps.app.goo.gl/Z78Q4PSavWatnrLUA" target="_blank">
+        <svg viewBox="0 0 24 24">
+          <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon>
+          <line x1="9" y1="3" x2="9" y2="18"></line>
+          <line x1="15" y1="6" x2="15" y2="21"></line>
+        </svg>
+        <span>Xem trên bản đồ</span>
+      </a>
+      <div class="f-copy">
+        &copy; 2026 Thảo Sâm Bakery. Thiết kế sang trọng & hiện đại hơn. All rights reserved.
+      </div>
+    </footer>
+
+    <!-- ===================== FLOATING CONTACT DIAL DOCK ===================== -->
+    <aside class="contact-dock" id="contactDock">
+      <div class="dock-buttons">
+        <div class="dock-item">
+          <span class="dock-label">Liên hệ Zalo</span>
+          <a class="fab zalo" id="dockZalo" href="https://zalo.me/0385535482" target="_blank">
+            <svg viewBox="0 0 360 360" fill="none">
+              <path
+                d="M180 0C80.58 0 0 71.62 0 160c0 48.06 23.63 91.13 61.27 120.31-4.72 23.82-19.16 57.06-20.08 59.13-.67 1.51-1.02 3.19-.07 4.54 1.13 1.59 3.52 1.34 4.89.5 2.19-1.34 56.4-34.92 78.43-48.43A201.27 201.27 0 0 0 180 320c99.42 0 180-71.62 180-160S279.42 0 180 0z"
+                fill="#fff" />
+              <path
+                d="M260.6 150.31c-3.15-1.57-22.13-10.9-25.59-12.16-3.46-1.26-6-1.89-8.52 1.89s-9.77 12.16-11.97 14.68c-2.2 2.52-4.41 2.84-7.56 1.26-3.15-1.57-13.3-4.9-25.33-15.63-9.36-8.34-15.68-18.64-17.51-21.79-1.83-3.15-.2-4.85 1.38-6.42 1.42-1.41 3.15-3.68 4.73-5.51a23.16 23.16 0 0 0 3.15-5.2c.95-1.89.47-3.62-.24-5.2s-6-14.68-8.2-20.04c-2.14-5.22-4.32-4.52-5.91-4.6H143c-3.15 0-8.2 1.18-12.46 5.83C126.28 87.5 114.3 98.7 114.3 121.4c0 22.7 16.5 44.66 18.79 47.81s32.48 49.6 78.7 69.58c10.99 4.75 19.57 7.58 26.26 9.7 11.04 3.5 21.08 3 29.04 1.8 8.87-1.33 27.24-11.13 31.02-21.37 3.78-10.24 3.78-19.03 2.68-20.89-1.1-1.87-4.09-2.99-7.24-4.56z"
+                fill="#0068FF" />
+            </svg>
+          </a>
+        </div>
+        <div class="dock-item">
+          <span class="dock-label">Gọi điện thoại</span>
+          <a class="fab call" id="dockCall" href="tel:0385535482">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+              </path>
+            </svg>
+          </a>
+        </div>
+        <div class="dock-item">
+          <span class="dock-label">Bản đồ Maps</span>
+          <a class="fab map" id="dockMap" href="https://maps.app.goo.gl/Z78Q4PSavWatnrLUA" target="_blank">
+            <svg viewBox="0 0 24 24">
+              <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon>
+              <line x1="9" y1="3" x2="9" y2="18"></line>
+              <line x1="15" y1="6" x2="15" y2="21"></line>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <button class="fab toggle" id="dialToggle" aria-label="Menu liên hệ">
+        <svg viewBox="0 0 24 24">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+      </button>
+    </aside>
+
+    <!-- ===================== FLOATING QUICK-OPEN CART FAB ===================== -->
+    <button class="cart-fab" id="cartFab" onclick="openCart()">
+      <svg viewBox="0 0 24 24">
+        <circle cx="9" cy="21" r="1"></circle>
+        <circle cx="20" cy="21" r="1"></circle>
+        <path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"></path>
+      </svg>
+      <span class="cf-count" id="cfCount">0</span>
+      <span class="cf-total" id="cfTotal">0đ</span>
+    </button>
+
+    <!-- ===================== OVERLAY SHADOW ===================== -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- ===================== PRODUCT DRAWER (SHEET) ===================== -->
+    <section class="sheet" id="productSheet">
+      <div class="grip"></div>
+      <div class="sheet-head">
+        <h3>Tùy chọn sản phẩm</h3>
+        <button class="sheet-close" onclick="closeAllSheets()">&times;</button>
+      </div>
+      <div class="sheet-body">
+        <img class="psheet-img" id="psheetImg" src="" alt="Sản phẩm đang chọn">
+        <h3 class="psheet-name" id="psheetName">Tên món bánh</h3>
+        <p class="psheet-desc" id="psheetDesc">Mô tả sản phẩm chi tiết sẽ hiển thị ở đây.</p>
+
+        <div class="option-group-label">Chọn kích cỡ</div>
+        <div class="size-grid" id="sizeGrid">
+          <!-- Dynamic size buttons render here -->
+        </div>
+
+        <div class="qty-row">
+          <span class="qty-label">Số lượng</span>
+          <div class="qty-controller">
+            <button class="qty-btn" onclick="adjustCustomizerQty(-1)">-</button>
+            <span class="qty-value" id="qtyVal">1</span>
+            <button class="qty-btn" onclick="adjustCustomizerQty(1)">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="sheet-foot">
+        <button class="btn-primary" id="customizerAddBtn" onclick="addCurrentToCart()">Thêm vào giỏ</button>
+      </div>
+    </section>
+
+    <!-- ===================== CART DRAWER (SHEET) ===================== -->
+    <section class="sheet" id="cartSheet">
+      <div class="grip"></div>
+      <div class="sheet-head">
+        <h3>Giỏ hàng của bạn</h3>
+        <button class="sheet-close" onclick="closeAllSheets()">&times;</button>
+      </div>
+      <div class="sheet-body" id="cartBody">
+        <!-- Cart list rendered dynamically -->
+      </div>
+      <div class="sheet-foot" id="cartSheetFoot">
+        <div class="summary-container">
+          <div class="sum-line total">
+            <span>Tổng số tiền:</span>
+            <span class="val" id="cartTotalVal">0đ</span>
+          </div>
+        </div>
+        <button class="btn-primary" style="margin-top: 14px;" onclick="openCheckout()">Tiếp tục đặt hàng</button>
+      </div>
+    </section>
+
+    <!-- ===================== CHECKOUT DRAWER (SHEET) ===================== -->
+    <section class="sheet" id="checkoutSheet">
+      <div class="grip"></div>
+      <div class="sheet-head">
+        <h3>Thông tin giao hàng</h3>
+        <button class="sheet-close" onclick="closeAllSheets()">&times;</button>
+      </div>
+      <div class="sheet-body" id="checkoutBody">
+        <!-- Fulfillment and text fields rendered dynamically -->
+      </div>
+      <div class="sheet-foot">
+        <button class="btn-primary" onclick="submitOrderForm()">Xác nhận đặt hàng</button>
+      </div>
+    </section>
+
+    <!-- ===================== SUCCESS DRAWER (SHEET) ===================== -->
+    <section class="sheet" id="successSheet">
+      <div class="grip"></div>
+      <div class="sheet-head">
+        <h3>Đơn hàng của bạn</h3>
+        <button class="sheet-close" onclick="startNewOrderCycle()">&times;</button>
+      </div>
+      <div class="sheet-body" id="successSheetBody">
+        <!-- Success content and details summary rendered here -->
+      </div>
+      <div class="sheet-foot">
+        <button class="btn-primary" id="zaloSendBtn">Gửi đơn cho cửa hàng</button>
+        <button class="btn-ghost" style="margin-top: 10px;" onclick="startNewOrderCycle()">Về trang chủ menu</button>
+      </div>
+    </section>
+
+    <!-- ===================== TOAST NOTIFICATION POPUP ===================== -->
+    <div class="toast" id="toast">Thông báo hệ thống</div>
+
+  </div>
+
+  <!-- JavaScript Modules -->
+  <script type="module" src="app.js"></script>
+</body>
+
+</html>
