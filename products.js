@@ -293,5 +293,12 @@ export const PRODUCTS = [
     "name": "Bánh kem whipping ô long nhài nhãn mix su kem",
     "desc": "Bánh kem cốt ô long và lớp kem whipping ô long nhài, kết hợp thạch trà bá tước và xốt trà ô long trong nhân bánh càng thêm phần đậm vị, bên ngoài là những chiếc bánh su kem Singapore với lớp vỏ dai mềm, nhân kem ngậy béo, các loại hoa quả tươi: xoài, nhãn, việt quất. Một chiếc biếc bánh ngọt ngào dành tặng Mẹ",
     "img": "https://r2.cms.4handy.vn/banh-kem-whipping-o-long-nhai-nhan-mix-su-kem-main-1024x1024.jpg"
+  },
+  {
+    "id": "C021",
+    "cat": "cake1",
+    "name": "Bánh kem whipping ô long nhài nhãn mix su kem",
+    "desc": "Bánh kem cốt ô long và lớp kem whipping ô long nhài, kết hợp thạch trà bá tước và xốt trà ô long trong nhân bánh càng thêm phần đậm vị, bên ngoài là những chiếc bánh su kem Singapore với lớp vỏ dai mềm, nhân kem ngậy béo, các loại hoa quả tươi: xoài, nhãn, việt quất. Một chiếc biếc bánh ngọt ngào dành tặng Mẹ",
+    "img": "https://r2.cms.4handy.vn/banh-kem-whipping-o-long-nhai-nhan-mix-su-kem-main-1024x1024.jpg"
   }
 ];
