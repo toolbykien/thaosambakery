@@ -272,5 +272,19 @@ export const PRODUCTS = [
     "name": "Bánh kem socola oreo dâu tây",
     "desc": "Bánh kem cốt socola kết hợp với kem vị oreo, trang trí dâu tây và bánh quy oreo cùng với lớp socola sệt trên mặt bánh",
     "img": "https://r2.cms.4handy.vn/banh-kem-socola-oreo-dau-tay-1024x1026.jpg"
+  },
+  {
+    "id": "C018",
+    "cat": "cake2",
+    "name": "Bánh kem Double Choco Oreo",
+    "desc": "Bánh kem cốt socola, kem socola và oreo, trang trí trên mặt bánh những \"chú\" oreo tinh nghịch dễ thương và vụn bánh oreo",
+    "img": "https://r2.cms.4handy.vn/banh-kem-double-choco-oreo-1024x1027.jpg"
+  },
+  {
+    "id": "C019",
+    "cat": "cake1",
+    "name": "Bánh kem petit oreo dâu tây",
+    "desc": "Bánh kem cốt socola, mứt dâu tây kết hợp cùng kem tươi vị oreo, trang trí phủ bên trên lớp socola sệt và dâu tây cùng những chiếc \"petit oreo\" nhỏ xinh",
+    "img": "https://r2.cms.4handy.vn/banh-kem-petit-oreo-dau-tay-1024x1024.jpg"
   }
 ];
