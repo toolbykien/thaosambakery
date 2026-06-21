@@ -307,5 +307,45 @@ export const PRODUCTS = [
     "code": "UPQ86",
     "desc": "Bánh kem cốt bánh ô long nhài kết hợp cùng với mứt vải và kem vị vải chua dịu, thơm nồng, phủ bên trên lớp thạch hoa hồng tráng gương cùng những trải vải thiều tươi và viêt quất, hoa hồng khô, lá vàng",
     "img": "https://r2.cms.4handy.vn/banh-kem-vai-thach-trang-guong-hoa-hong-1024x1024.jpg"
+  },
+  {
+    "id": "C039",
+    "cat": "cake1",
+    "name": "Bánh kem Triple Choco",
+    "code": "TSE34",
+    "desc": "Bánh 3 lần vị socola: cốt bánh socola, kem tươi vị socola, trang trí socola chip và socola sệt.",
+    "img": "https://r2.cms.4handy.vn/banh-kem-triple-choco-1024x1018.png"
+  },
+  {
+    "id": "C040",
+    "cat": "cake2",
+    "name": "Bông lan trứng muối sốt phô mai",
+    "code": "QYG90",
+    "desc": "Cốt vani, sốt bơ trứng. Trang trí thêm chà bông heo đặc biệt, sốt phô mai, trứng muối và chà bông gà cay",
+    "img": "https://r2.cms.4handy.vn/banh-bong-lan-trung-muoi-sot-pho-mai-1024x1024.png"
+  },
+  {
+    "id": "C041",
+    "cat": "cake3",
+    "name": "Bánh kem hồng nến xoắn việt quất",
+    "code": "YZT55",
+    "desc": "Bánh kem cốt vani, mứt việt quất, kem trắng, phủ bên ngoài lớp kem màu hồng nhạt, trang trí việt quất và nến xoắn dài",
+    "img": "https://r2.cms.4handy.vn/banh-kem-hong-nen-xoan-viet-quat-1024x1015.jpg"
+  },
+  {
+    "id": "C042",
+    "cat": "cake4",
+    "name": "Bông lan trứng muối Couple Bear",
+    "code": "VHW34",
+    "desc": "Bánh bông lan trứng muối cốt vani, ở giữa lớp cốt bánh là sốt bơ trứng, bên trên mặt bánh trang trí hình gấu cùng trứng muối nghiền và chà bông heo",
+    "img": "https://r2.cms.4handy.vn/bong-lan-trung-muoi-couple-bear-1024x1024.jpg"
+  },
+  {
+    "id": "C043",
+    "cat": "cake1",
+    "name": "Bánh kem whipping ô long nhài nhãn",
+    "code": "RXJ28",
+    "desc": "Cốt bánh ô lòng nhài kết hợp cùng kem whipping ô long nhài thơm ngậy, trang trí những trái nhãn tươi căng mọng, hoa nhài và lá vàng",
+    "img": "https://r2.cms.4handy.vn/banh-kem-whipping-o-long-nhai-nhan-main-20260609092913-1024x1023.jpg"
   }
 ];
