@@ -90,6 +90,20 @@ export const CATEGORIES = [
         "price": 550000
       }
     ]
+  },
+  {
+    "id": "cake5",
+    "name": "🍞 Bánh Mỳ",
+    "sizes": [
+      {
+        "label": "1",
+        "price": 5000
+      },
+      {
+        "label": "2",
+        "price": 10000
+      }
+    ]
   }
 ];
 
