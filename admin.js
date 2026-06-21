@@ -340,18 +340,40 @@ function handleFormSubmit(event) {
     }
   } else {
     const newId = generateProductId();
+    const productCode = generateProductCode();
+    const finalName = `${name} - ${productCode}`;
     PRODUCTS.push({
       id: newId,
       cat: cat,
-      name: name,
+      name: finalName,
       desc: desc,
       img: imageContent
     });
-    showToast(`Đã thêm món mới: ${name}`);
+    showToast(`Đã thêm món mới: ${finalName}`);
   }
 
   resetForm();
   renderProductsList();
+}
+
+function generateProductCode() {
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const digits = "0123456789";
+  let code = "";
+  while (true) {
+    code = "";
+    for (let i = 0; i < 3; i++) {
+      code += letters.charAt(Math.floor(Math.random() * letters.length));
+    }
+    for (let i = 0; i < 2; i++) {
+      code += digits.charAt(Math.floor(Math.random() * digits.length));
+    }
+    const isDuplicate = PRODUCTS.some(p => p.name && p.name.endsWith(" - " + code));
+    if (!isDuplicate) {
+      break;
+    }
+  }
+  return code;
 }
 
 function generateProductId() {
