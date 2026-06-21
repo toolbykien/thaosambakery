@@ -339,17 +339,15 @@ function handleFormSubmit(event) {
       showToast(`Đã cập nhật: ${name}`);
     }
   } else {
-    const newId = generateProductId();
-    const productCode = generateProductCode();
-    const finalName = `${name} - ${productCode}`;
+    const newId = generateProductCode();
     PRODUCTS.push({
       id: newId,
       cat: cat,
-      name: finalName,
+      name: name,
       desc: desc,
       img: imageContent
     });
-    showToast(`Đã thêm món mới: ${finalName}`);
+    showToast(`Đã thêm món mới: ${name} - ${newId}`);
   }
 
   resetForm();
@@ -368,22 +366,12 @@ function generateProductCode() {
     for (let i = 0; i < 2; i++) {
       code += digits.charAt(Math.floor(Math.random() * digits.length));
     }
-    const isDuplicate = PRODUCTS.some(p => p.name && p.name.endsWith(" - " + code));
+    const isDuplicate = PRODUCTS.some(p => p.id === code);
     if (!isDuplicate) {
       break;
     }
   }
   return code;
-}
-
-function generateProductId() {
-  if (PRODUCTS.length === 0) return "C001";
-  const ids = PRODUCTS.map(p => {
-    const num = parseInt(p.id.replace(/[A-Za-z]/g, ""));
-    return isNaN(num) ? 0 : num;
-  });
-  const maxId = Math.max(...ids);
-  return "C" + (maxId + 1).toString().padStart(3, "0");
 }
 
 function resetForm() {
