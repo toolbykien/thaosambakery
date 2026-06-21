@@ -188,11 +188,17 @@
               <div class="form-group">
                 <label>Kích cỡ & Giá bán <span class="required">*</span></label>
                 <div class="sizes-manager-box">
-                  <div class="size-input-row">
-                    <input type="text" id="newSizeLabel" placeholder="Cỡ (vd: M, L, 20cm)">
-                    <input type="number" id="newSizePrice" placeholder="Giá (vd: 35000)">
-                    <button type="button" class="btn btn-secondary" onclick="addSizeToTempList()">Thêm</button>
+                  <div class="sizes-input-fields">
+                    <div class="size-field-col">
+                      <input type="text" id="newSizeLabel" placeholder="Cỡ (vd: M, L, 20cm)">
+                    </div>
+                    <div class="size-field-col">
+                      <input type="number" id="newSizePrice" placeholder="Giá (vd: 35000)">
+                    </div>
                   </div>
+                  <button type="button" class="btn btn-secondary btn-block" onclick="addSizeToTempList()">
+                    ➕ Thêm kích cỡ
+                  </button>
                   <div class="temp-sizes-list" id="tempSizesList">
                     <!-- Sizes list rendered dynamically -->
                   </div>

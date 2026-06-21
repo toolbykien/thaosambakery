@@ -241,6 +241,7 @@ label {
 
 input[type="text"],
 input[type="password"],
+input[type="number"],
 select,
 textarea {
   width: 100%;
@@ -782,18 +783,17 @@ input[type="file"] {
     gap: 6px;
     margin-bottom: 16px;
   }
+
   .admin-tab-btn {
     flex-grow: 1;
     font-size: 13px;
     padding: 8px 8px;
     text-align: center;
   }
-  .size-input-row {
-    flex-direction: column;
+
+  .sizes-input-fields {
+    flex-direction: row;
     gap: 8px;
-  }
-  .size-input-row .btn {
-    width: 100%;
   }
 }
 
@@ -843,21 +843,22 @@ input[type="file"] {
   border: 1.5px solid var(--border-color);
 }
 
-.size-input-row {
+.sizes-input-fields {
   display: flex;
-  gap: 8px;
+  gap: 10px;
+  width: 100%;
 }
 
-.size-input-row input[type="text"],
-.size-input-row input[type="number"] {
-  flex-grow: 1;
-  padding: 8px 10px;
-  font-size: 13px;
+.sizes-input-fields .size-field-col:first-child {
+  flex: 0 0 100px;
 }
 
-.size-input-row .btn {
-  padding: 8px 14px;
-  font-size: 12.5px;
+.sizes-input-fields .size-field-col:last-child {
+  flex: 1;
+}
+
+.btn-block {
+  width: 100%;
 }
 
 .temp-sizes-list {
