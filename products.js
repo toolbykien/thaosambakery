@@ -183,27 +183,6 @@ export const PRODUCTS = [
     "img": "https://r2.cms.4handy.vn/banh-kem-double-choco-oreo-1024x1027.jpg"
   },
   {
-    "id": "C019",
-    "cat": "cake1",
-    "name": "Bánh kem petit oreo dâu tây",
-    "desc": "Bánh kem cốt socola, mứt dâu tây kết hợp cùng kem tươi vị oreo, trang trí phủ bên trên lớp socola sệt và dâu tây cùng những chiếc \"petit oreo\" nhỏ xinh",
-    "img": "https://r2.cms.4handy.vn/banh-kem-petit-oreo-dau-tay-1024x1024.jpg"
-  },
-  {
-    "id": "C020",
-    "cat": "cake1",
-    "name": "Bánh kem whipping ô long nhài nhãn mix su kem",
-    "desc": "Bánh kem cốt ô long và lớp kem whipping ô long nhài, kết hợp thạch trà bá tước và xốt trà ô long trong nhân bánh càng thêm phần đậm vị, bên ngoài là những chiếc bánh su kem Singapore với lớp vỏ dai mềm, nhân kem ngậy béo, các loại hoa quả tươi: xoài, nhãn, việt quất. Một chiếc biếc bánh ngọt ngào dành tặng Mẹ",
-    "img": "https://r2.cms.4handy.vn/banh-kem-whipping-o-long-nhai-nhan-mix-su-kem-main-1024x1024.jpg"
-  },
-  {
-    "id": "C021",
-    "cat": "cake1",
-    "name": "Bông lan trứng muối Trái tim",
-    "desc": "Phiên bản nhiều ruốc, nhiều trứng muối hơn, trang trí thêm hình trái tim trên mặt. Cốt bánh mềm ẩm, ngoài sốt dầu trứng còn có thêm sốt phô mai béo ngậy, ăn cùng chà bông heo và ruốc gà cay.",
-    "img": "https://r2.cms.4handy.vn/banh-bltm-trai-tim-1024x1021.png"
-  },
-  {
     "id": "C022",
     "cat": "cake4",
     "name": "Bánh kem tim red velvet kem sữa chua hoa quả",
@@ -218,18 +197,115 @@ export const PRODUCTS = [
     "img": "https://r2.cms.4handy.vn/banh-kem-black-forest-1024x1023.png"
   },
   {
-    "id": "C024",
-    "cat": "cake1",
-    "name": "Bánh kem Xoài Chanh Leo",
-    "desc": "Bánh kem cốt vani, mứt xoài, nhân xoài tươi, kem vị chanh leo, trang trí thêm xoài tươi trên mặt",
-    "img": "https://r2.cms.4handy.vn/banh-kem-xoai-chanh-leo-1024x1024.jpg"
-  },
-  {
     "id": "C025",
     "cat": "cake1",
     "name": "Bông lan trứng muối Việt quất",
     "code": "MIF90",
     "desc": "Cốt bông lan mềm mịn kết hợp sốt bơ trứng và sốt phô mai béo ngậy, xen giữa chà bông heo và trứng muối ở mỗi lớp bánh, trang trí thêm việt quất tươi",
     "img": "https://r2.cms.4handy.vn/banh-bltm-viet-quat-1024x1023.png"
+  },
+  {
+    "id": "C026",
+    "cat": "cake3",
+    "name": "Bánh Napoleon Lemon",
+    "code": "CTG44",
+    "desc": "Bánh Napoleon Chanh vàng - sự kết hợp độc đáo đầy mới mẻ khi những lớp bánh puff pastry nướng giòn kết hợp cùng Diplomat Cream & sốt chanh vàng, vị ngậy béo được trung hòa cùng vị chua thanh dịu nhẹ, tạo cảm giác lôi cuốn, đầy hấp dẫn.",
+    "img": "https://r2.cms.4handy.vn/banh-napoleon-lemon-1024x1024.jpg"
+  },
+  {
+    "id": "C027",
+    "cat": "cake3",
+    "name": "Bánh bông lan trứng muối gấu",
+    "code": "XRA51",
+    "desc": "Cốt bánh vani, bên trong có sốt bơ trứng và trứng muối nghiền ở mỗi lớp bánh, phủ bên ngoài là lớp chà bông heo đặc biệt, trang trí hình gấu",
+    "img": "https://r2.cms.4handy.vn/banh-bong-lan-trung-muoi-gau-1024x1024.jpg"
+  },
+  {
+    "id": "C028",
+    "cat": "cake3",
+    "name": "Bánh kem whipping ô long nhài nhãn mix su kem",
+    "code": "PBJ70",
+    "desc": "Bánh kem cốt ô long và lớp kem whipping ô long nhài, kết hợp thạch trà bá tước và xốt trà ô long trong nhân bánh càng thêm phần đậm vị, bên ngoài là những chiếc bánh su kem Singapore với lớp vỏ dai mềm, nhân kem ngậy béo, các loại hoa quả tươi: xoài, nhãn, việt quất. Một chiếc biếc bánh ngọt ngào dành tặng Mẹ",
+    "img": "https://r2.cms.4handy.vn/banh-kem-whipping-o-long-nhai-nhan-mix-su-kem-2-1024x1024.jpg"
+  },
+  {
+    "id": "C029",
+    "cat": "cake3",
+    "name": "Bánh kem whipping phô mai mix su kem",
+    "code": "JGF87",
+    "desc": "Bánh kem cốt vani, mứt dâu kết hợp với kem whipping phô mai ngậy béo từ cream cheese và mascarpone cheese, bên ngoài là những chiếc bánh su kem Singapore với lớp vỏ dai mềm, nhân kem ngậy béo, các loại hoa quả tươi: dâu tây, việt quất. Chiếc bánh thay một lời chúc ý nghĩa gửi đến Mẹ",
+    "img": "https://r2.cms.4handy.vn/banh-kem-whipping-pho-mai-mix-su-kem-1-1024x1024.jpg"
+  },
+  {
+    "id": "C030",
+    "cat": "cake4",
+    "name": "Bánh kem giỏ hoa dâu tây việt quất",
+    "code": "LGI89",
+    "desc": "Bánh kem 3 lớp cốt bánh vani, mứt việt quất, kết hợp cùng kem vị việt quất, tạo hình giỏ hoa trang trí dâu tây và việt quất tươi, kẹo bi bạc trang trí",
+    "img": "https://r2.cms.4handy.vn/banh-kem-gio-hoa-dau-tay-viet-quat-1024x1024.jpg"
+  },
+  {
+    "id": "C031",
+    "cat": "cake2",
+    "name": "Bánh kem giỏ hoa nến xoắn tim đỏ",
+    "code": "EML89",
+    "desc": "Bánh kem cốt vani, mứt việt quất kết hợp cùng với kem trắng, bắt kem tạo hình giỏ hoa, trang trí bên trên bằng hoa quả tươi: dâu tây, việt quất cùng nến xoắn nơ đỏ, kẹo bi đường trang trí và trái tim socola vô cùng đáng yêu",
+    "img": "https://r2.cms.4handy.vn/banh-kem-gio-hoa-nen-xoan-tim-do-1024x1024.png"
+  },
+  {
+    "id": "C032",
+    "cat": "cake2",
+    "name": "Mousse bơ sữa dừa xoài việt quất (bơ tươi)",
+    "code": "EIL94",
+    "desc": "Lớp mousse bơ mềm, mịn và lớp mousse sữa dừa kết hợp cùng cốt bánh vani. Trang trí thêm bơ 034 bùi thơm, xoài tươi và việt quất",
+    "img": "https://r2.cms.4handy.vn/mousse-bo-sua-dua-xoai-viet-quat-1024x1019.jpg"
+  },
+  {
+    "id": "C033",
+    "cat": "cake1",
+    "name": "Bánh Tiramisu Cacao",
+    "code": "FZE12",
+    "desc": "Bánh tiramisu sử dụng cốt bánh bông lan cà phê và bánh lady finger chuẩn vị, kết hợp hài hòa cùng rượu Rhum, café, pha thêm vị béo của kem tươi, phô mai Mascarpone Ý cùng lòng đỏ trứng. Tạo nên vị thanh ngọt nhẹ nhàng, hơi hơi nồng hương rượu rất hấp dẫn, bên trên phủ lớp kem topping vị cà phê cốt dừa và bột cacao nguyên chất.",
+    "img": "https://r2.cms.4handy.vn/banh-tiramisu-cacao-1024x1022.jpg"
+  },
+  {
+    "id": "C034",
+    "cat": "cake4",
+    "name": "Hộp 12 su kem chà bông hoa quả",
+    "code": "TYY36",
+    "desc": "Hộp gồm 12 bánh Su kem Singapore với lớp vỏ su dai mềm và nhân kem sữa tươi thơm ngậy, đựng trong những chiếc cup giấy nhỏ xinh, trang trí thêm hoa quả tươi: dâu, xoài, nho, việt quất và sốt phô mai, 2 loại chà bông cùng trứng muối nghiền",
+    "img": "https://r2.cms.4handy.vn/hop-12-su-kem-cha-bong-hoa-qua-1024x1024.jpg"
+  },
+  {
+    "id": "C035",
+    "cat": "cake1",
+    "name": "Bánh kem bơ xoài (bơ tươi)",
+    "code": "BKA52",
+    "desc": "Bánh kem cốt vani, mứt xoài, nhân bơ tươi kết hợp cùng kem vị bơ và kem vị xoài dừa. Trang trí thêm bơ 034 bùi thơm, xoài tươi và việt quất",
+    "img": "https://r2.cms.4handy.vn/banh-kem-bo-xoai-1024x1024.jpg"
+  },
+  {
+    "id": "C036",
+    "cat": "cake1",
+    "name": "Bánh kem giỏ hoa bơ nho",
+    "code": "OUE88",
+    "desc": "Bánh kem 3 lớp cốt bánh vani, mứt xoài kết hợp với kem bơ, tạo hình giỏ hoa trang trí bơ sáp 034, nho xanh tươi mát, việt quất, kẹo bi bạc trang trí",
+    "img": "https://r2.cms.4handy.vn/banh-kem-gio-hoa-bo-nho-1024x1024.jpg"
+  },
+  {
+    "id": "C037",
+    "cat": "cake1",
+    "name": "Bánh kem thạch tráng gương vải",
+    "code": "KWD87",
+    "desc": "Bánh kem cốt bánh ô long nhài kết hợp cùng mứt vải và kem vị vải chua ngọt dịu nhẹ, phủ bên trên lớp thạch vải nồng nàn cùng những trải vải thiều tươi và hoa hồng khô, lá vàng",
+    "img": "https://r2.cms.4handy.vn/banh-kem-thach-trang-guong-vai-1024x1024.jpg"
+  },
+  {
+    "id": "C038",
+    "cat": "cake1",
+    "name": "Bánh kem vải thạch tráng gương hoa hồng",
+    "code": "UPQ86",
+    "desc": "Bánh kem cốt bánh ô long nhài kết hợp cùng với mứt vải và kem vị vải chua dịu, thơm nồng, phủ bên trên lớp thạch hoa hồng tráng gương cùng những trải vải thiều tươi và viêt quất, hoa hồng khô, lá vàng",
+    "img": "https://r2.cms.4handy.vn/banh-kem-vai-thach-trang-guong-hoa-hong-1024x1024.jpg"
   }
 ];
