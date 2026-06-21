@@ -703,7 +703,7 @@ function showOrderSuccess(orderText) {
         <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
       </div>
       <h3>Đặt hàng thành công!</h3>
-      <p class="success-note">Cảm ơn bạn đã đặt bánh tại Thảo Sâm Bakery.<br>Dữ liệu đơn hàng đã được tự động Copy.<br>Bấm nút bên dưới và gửi đơn qua Zalo để xác nhận đơn hàng.</p>
+      <p class="success-note">Cảm ơn bạn đã đặt bánh tại Thảo Sâm Bakery.<br>Dữ liệu đơn hàng sẽ được tự động sao chép.<br>Bấm nút bên dưới và gửi đơn qua Zalo để xác nhận đơn hàng.</p>
       <div class="order-details-card">
         ${destination}
         <hr>
@@ -718,14 +718,34 @@ function showOrderSuccess(orderText) {
 
   // Attach dynamic Zalo Clipboard copier + redirect
   $("zaloSendBtn").onclick = function () {
+    const handleRedirect = () => {
+      showToast("Đã sao chép đơn — dán vào Zalo gửi tiệm nhé!", 2500);
+      setTimeout(() => {
+        window.open(CONFIG.zaloLink, "_blank");
+      }, 2500);
+    };
+
     if (navigator.clipboard) {
       navigator.clipboard.writeText(orderText)
-        .then(() => showToast("Đã sao chép đơn — dán vào Zalo gửi tiệm nhé!"))
-        .catch(() => { });
+        .then(handleRedirect)
+        .catch(() => {
+          window.open(CONFIG.zaloLink, "_blank");
+        });
+    } else {
+      try {
+        const textarea = document.createElement("textarea");
+        textarea.value = orderText;
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+      } catch (err) {
+        console.error("Fallback copy failed", err);
+      }
+      handleRedirect();
     }
-    setTimeout(() => {
-      window.open(CONFIG.zaloLink, "_blank");
-    }, 450);
   };
 
   openSheet("successSheet");
@@ -744,7 +764,7 @@ window.startNewOrderCycle = function () {
    TOASTS NOTIFIER
    ========================================================================== */
 let toastTimer;
-function showToast(msg) {
+function showToast(msg, duration = 2500) {
   const t = $("toast");
   if (!t) return;
   t.textContent = msg;
@@ -752,7 +772,7 @@ function showToast(msg) {
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => {
     t.classList.remove("show");
-  }, 2500);
+  }, duration);
 }
 
 // Cuộn trang tự động bị tắt do hiển thị tab riêng lẻ
