@@ -297,8 +297,8 @@ export const PRODUCTS = [
   {
     "id": "C021",
     "cat": "cake1",
-    "name": "Bánh kem whipping ô long nhài nhãn mix su kem",
-    "desc": "Bánh kem cốt ô long và lớp kem whipping ô long nhài, kết hợp thạch trà bá tước và xốt trà ô long trong nhân bánh càng thêm phần đậm vị, bên ngoài là những chiếc bánh su kem Singapore với lớp vỏ dai mềm, nhân kem ngậy béo, các loại hoa quả tươi: xoài, nhãn, việt quất. Một chiếc biếc bánh ngọt ngào dành tặng Mẹ",
-    "img": "https://r2.cms.4handy.vn/banh-kem-whipping-o-long-nhai-nhan-mix-su-kem-main-1024x1024.jpg"
+    "name": "Bông lan trứng muối Trái tim",
+    "desc": "Phiên bản nhiều ruốc, nhiều trứng muối hơn, trang trí thêm hình trái tim trên mặt. Cốt bánh mềm ẩm, ngoài sốt dầu trứng còn có thêm sốt phô mai béo ngậy, ăn cùng chà bông heo và ruốc gà cay.",
+    "img": "https://r2.cms.4handy.vn/banh-bltm-trai-tim-1024x1021.png"
   }
 ];
