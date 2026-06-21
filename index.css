@@ -596,6 +596,7 @@ a {
   flex-direction: column;
   transition: var(--transition);
   position: relative;
+  cursor: pointer;
 }
 
 .card:hover {

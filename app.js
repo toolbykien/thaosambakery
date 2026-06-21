@@ -167,7 +167,7 @@ function renderCategorySection(cat, filtered) {
     }
 
     return `
-      <div class="card" id="card_${p.id}">
+      <div class="card" id="card_${p.id}" onclick="openProductCustomizer('${p.id}')">
         <div class="card-img-box">
           <img src="${p.img}" alt="${p.name}" loading="lazy">
           <span class="card-badge">${cat.name.split(" ")[1] || "Món"}</span>
@@ -180,7 +180,7 @@ function renderCategorySection(cat, filtered) {
               <small>${sizeText}</small>
               <span class="card-price">${formatPrice(priceNum)}</span>
             </div>
-            <button class="add-btn" onclick="openProductCustomizer('${p.id}')" aria-label="Thêm vào giỏ">
+            <button class="add-btn" aria-label="Thêm vào giỏ">
               <svg viewBox="0 0 24 24" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
             </button>
           </div>
