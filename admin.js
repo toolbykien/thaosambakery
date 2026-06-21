@@ -107,6 +107,12 @@ async function connectGitHub(silent = false) {
     $("btnReload").disabled = false;
     $("btnSave").disabled = false;
 
+    // Auto-collapse sidebar configuration on mobile devices after connection
+    const sidebar = document.querySelector(".sidebar");
+    if (sidebar && window.innerWidth <= 768) {
+      sidebar.classList.add("collapsed");
+    }
+
     showToast("Kết nối thành công! Đã tải danh sách sản phẩm.");
     
     // Initial renders
@@ -516,6 +522,14 @@ function showToast(msg) {
   }, 3500);
 }
 
+// Toggle sidebar config panel visibility on mobile
+function toggleSidebarConfig() {
+  const sidebar = document.querySelector(".sidebar");
+  if (sidebar) {
+    sidebar.classList.toggle("collapsed");
+  }
+}
+
 // ==========================================================================
 // EXPOSE FUNCTIONS TO GLOBAL WINDOW SCOPE (REQUIRED FOR MODULE SCRIPTS)
 // ==========================================================================
@@ -530,4 +544,5 @@ window.resetForm = resetForm;
 window.editProduct = editProduct;
 window.deleteProduct = deleteProduct;
 window.setFilterTab = setFilterTab;
+window.toggleSidebarConfig = toggleSidebarConfig;
 

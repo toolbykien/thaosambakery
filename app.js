@@ -19,11 +19,6 @@ const CATEGORIES = [
   { id: "cake3", name: "🧃 Bánh Gato Sự Kiện" },
   { id: "cake4", name: "☕ Bánh Gato Thường Ngày" },
 ];
-
-const WARDS = ["Phường Yên Nghĩa", "Phường Hà Đông", "Phường Dương Nội", "Phường Kiến Hưng", "Phường Phú Lương", "Phường Hoàn Kiếm", "Phường Cửa Nam", "Phường Ba Đình", "Phường Ngọc Hà", "Phường Giảng Võ", "Phường Hai Bà Trưng", "Phường Vĩnh Tuy", "Phường Bạch Mai", "Phường Đống Đa", "Phường Kim Liên", "Phường Văn Miếu - Quốc Tử Giám", "Phường Láng", "Phường Ô Chợ Dừa", "Phường Hồng Hà", "Phường Lĩnh Nam", "Phường Hoàng Mai", "Phường Vĩnh Hưng", "Phường Tương Mai", "Phường Định Công", "Phường Hoàng Liệt", "Phường Yên Sở", "Phường Thanh Xuân", "Phường Khương Đình", "Phường Phương Liệt", "Phường Cầu Giấy", "Phường Nghĩa Đô", "Phường Yên Hòa", "Phường Tây Hồ", "Phường Phú Thượng", "Phường Tây Tựu", "Phường Phú Diễn", "Phường Xuân Đỉnh", "Phường Đông Ngạc", "Phường Thượng Cát", "Phường Từ Liêm", "Phường Xuân Phương", "Phường Tây Mỗ", "Phường Đại Mỗ", "Phường Long Biên", "Phường Bồ Đề", "Phường Việt Hưng", "Phường Phúc Lợi", "Xã Thanh Trì", "Xã Đại Thanh", "Xã Nam Phù", "Xã Ngọc Hồi", "Phường Thanh Liệt", "Xã Thượng Phúc", "Xã Thường Tín", "Xã Chương Dương", "Xã Hồng Vân", "Xã Phú Xuyên", "Xã Phượng Dực", "Xã Chuyên Mỹ", "Xã Đại Xuyên", "Xã Thanh Oai", "Xã Bình Minh", "Xã Tam Hưng", "Xã Dân Hòa", "Xã Vân Đình", "Xã Ứng Thiên", "Xã Hòa Xá", "Xã Ứng Hòa", "Xã Mỹ Đức", "Xã Hồng Sơn", "Xã Phúc Sơn", "Xã Hương Sơn", "Phường Chương Mỹ", "Xã Phú Nghĩa", "Xã Xuân Mai", "Xã Trần Phú", "Xã Hòa Phú", "Xã Quảng Bị", "Xã Minh Châu", "Xã Quảng Oai", "Xã Vật Lại", "Xã Cổ Đô", "Xã Bất Bạt", "Xã Suối Hai", "Xã Ba Vì", "Xã Yên Bài", "Phường Sơn Tây", "Phường Tùng Thiện", "Xã Đoài Phương", "Xã Phúc Thọ", "Xã Phúc Lộc", "Xã Hát Môn", "Xã Thạch Thất", "Xã Hạ Bằng", "Xã Tây Phương", "Xã Hòa Lạc", "Xã Yên Xuân", "Xã Quốc Oai", "Xã Hưng Đạo", "Xã Kiều Phú", "Xã Phú Cát", "Xã Hoài Đức", "Xã Dương Hòa", "Xã Sơn Đồng", "Xã An Khánh", "Xã Đan Phượng", "Xã Ô Diên", "Xã Liên Minh", "Xã Gia Lâm", "Xã Thuận An", "Xã Bát Tràng", "Xã Phù Đổng", "Xã Thư Lâm", "Xã Đông Anh", "Xã Phúc Thịnh", "Xã Thiên Lộc", "Xã Vĩnh Thanh", "Xã Mê Linh", "Xã Yên Lãng", "Xã Tiến Thắng", "Xã Quang Minh", "Xã Sóc Sơn", "Xã Đa Phúc", "Xã Nội Bài", "Xã Trung Giã", "Xã Kim Anh"];
-
-const NEAR = ["Phường Yên Nghĩa", "Phường Hà Đông", "Phường Dương Nội", "Phường Kiến Hưng", "Phường Phú Lương"];
-
 /* ==========================================================================
    APP STATE
    ========================================================================== */
@@ -32,7 +27,6 @@ let currentProduct = null;
 let selectedSize = null;
 let currentQty = 1;
 let selectedTable = null;
-let selectedWard = "";
 let fulfillmentType = "table"; // 'table' or 'delivery'
 let searchQuery = "";
 let activeCategory = "cake1"; // Mặc định hiển thị danh mục đầu tiên
@@ -509,7 +503,6 @@ window.removeCartItem = function (id, size) {
 window.openCheckout = function () {
   if (cart.length === 0) return;
   fulfillmentType = "table";
-  selectedWard = "";
   renderCheckoutForm();
   openSheet("checkoutSheet");
 };
@@ -570,16 +563,9 @@ function renderFulfillmentFields() {
         <label>Số điện thoại <span class="required">*</span></label>
         <input id="coPhone" type="tel" inputmode="numeric" placeholder="Ví dụ: 0912345678">
       </div>
-      <div class="form-field" id="field_ward">
-        <label>Thôn / Phường / Xã <span class="required">*</span></label>
-        <div class="combobox">
-          <input id="coWard" autocomplete="off" placeholder="Gõ để tìm nhanh phường/xã..." oninput="handleWardInput()" onfocus="handleWardInput()">
-          <div class="combobox-list" id="wardList"></div>
-        </div>
-      </div>
       <div class="form-field" id="field_addr">
-        <label>Địa chỉ chi tiết <span class="required">*</span></label>
-        <input id="coAddr" type="text" placeholder="Số nhà, ngõ, ngách, tên đường...">
+        <label>Địa chỉ nhận hàng <span class="required">*</span></label>
+        <input id="coAddr" type="text" placeholder="Thôn, xã, số nhà, tên đường...">
       </div>
       <div class="form-field">
         <label>Ghi chú giao hàng</label>
@@ -589,52 +575,9 @@ function renderFulfillmentFields() {
   }
 
   fieldsContainer.innerHTML = html;
-
-  if (fulfillmentType === "delivery" && selectedWard) {
-    $("coWard").value = selectedWard;
-  }
 }
 
-/* Autocomplete search function for Hanoi wards */
-window.handleWardInput = function () {
-  const q = $("coWard").value.trim().toLowerCase();
-  const list = $("wardList");
 
-  let matches = WARDS.filter(w => w.toLowerCase().includes(q));
-
-  if (matches.length === 0) {
-    list.innerHTML = `<div class="combo-list-empty">Không tìm thấy phường/xã phù hợp</div>`;
-    list.classList.add("show");
-    return;
-  }
-
-  list.innerHTML = matches.slice(0, 30).map(w => {
-    const isNear = NEAR.includes(w);
-    return `
-      <div class="combo-option ${isNear ? 'near-store' : ''}" onclick="selectWard('${w.replace(/'/g, "\\'")}')">
-        <span>${w}</span>
-        ${isNear ? '<span class="near-tag">Gần tiệm</span>' : ''}
-      </div>
-    `;
-  }).join("");
-
-  list.classList.add("show");
-};
-
-window.selectWard = function (wardName) {
-  selectedWard = wardName;
-  $("coWard").value = wardName;
-  $("wardList").classList.remove("show");
-  $("field_ward").classList.remove("error");
-};
-
-// Close autocomplete dropdown when clicking outside
-document.addEventListener("click", (e) => {
-  if (!e.target.closest(".combobox")) {
-    const l = $("wardList");
-    if (l) l.classList.remove("show");
-  }
-});
 
 /* ==========================================================================
    ORDER SUBMISSION & REDIRECTION FLOW
@@ -684,12 +627,7 @@ window.submitOrderForm = function () {
       setErrorState("field_phone", false);
     }
 
-    if (!selectedWard) {
-      setErrorState("field_ward", true);
-      isValid = false;
-    } else {
-      setErrorState("field_ward", false);
-    }
+
 
     const addr = ($("coAddr")?.value || "").trim();
     if (!addr) {
@@ -734,7 +672,7 @@ function generateOrderText() {
   } else {
     fulfillmentDetails = `🚚 ĐƠN GIAO TẬN NƠI\n👤 Người nhận: ${($("coName")?.value || "").trim()}` +
       `\n📞 Điện thoại: ${($("coPhone")?.value || "").trim()}` +
-      `\n📍 Địa chỉ: ${($("coAddr")?.value || "").trim()}, ${selectedWard}`;
+      `\n📍 Địa chỉ: ${($("coAddr")?.value || "").trim()}`;
     const note = ($("coNote")?.value || "").trim();
     if (note) fulfillmentDetails += `\n📝 Ghi chú: ${note}`;
   }
@@ -762,7 +700,7 @@ function showOrderSuccess(orderText) {
       <div class="od-line"><span class="od-label">Hình thức</span><span class="od-value">Giao tận nơi</span></div>
       <div class="od-line"><span class="od-label">Người nhận</span><span class="od-value">${($("coName")?.value || "").trim()}</span></div>
       <div class="od-line"><span class="od-label">Điện thoại</span><span class="od-value">${($("coPhone")?.value || "").trim()}</span></div>
-      <div class="od-line"><span class="od-label">Địa chỉ</span><span class="od-value">${($("coAddr")?.value || "").trim()}, ${selectedWard}</span></div>
+      <div class="od-line"><span class="od-label">Địa chỉ</span><span class="od-value">${($("coAddr")?.value || "").trim()}</span></div>
     `;
   }
 
@@ -802,7 +740,6 @@ function showOrderSuccess(orderText) {
 
 window.startNewOrderCycle = function () {
   cart = [];
-  selectedWard = "";
   fulfillmentType = "table";
   saveCart();
   updateCartUI();
