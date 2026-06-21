@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Thảo Sâm Bakery Website - Premium static design served with Vite",
   "main": "index.html",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
