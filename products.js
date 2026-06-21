@@ -300,5 +300,19 @@ export const PRODUCTS = [
     "name": "Bông lan trứng muối Trái tim",
     "desc": "Phiên bản nhiều ruốc, nhiều trứng muối hơn, trang trí thêm hình trái tim trên mặt. Cốt bánh mềm ẩm, ngoài sốt dầu trứng còn có thêm sốt phô mai béo ngậy, ăn cùng chà bông heo và ruốc gà cay.",
     "img": "https://r2.cms.4handy.vn/banh-bltm-trai-tim-1024x1021.png"
+  },
+  {
+    "id": "C022",
+    "cat": "cake4",
+    "name": "Bánh kem tim red velvet kem sữa chua hoa quả",
+    "desc": "Bánh hình trái tim, 2 - 3 lớp cốt Red Velvet, kem vị sữa chua thơm dịu. Mặt và chân bánh phủ vụn red velvet, trang trí thêm hoa quả tươi:dâu tây và việt quất",
+    "img": "https://r2.cms.4handy.vn/banh-kem-tim-red-velvet-kem-sua-chua-hoa-qua-1024x1022.png"
+  },
+  {
+    "id": "C023",
+    "cat": "cake2",
+    "name": "Bánh kem Black Forest",
+    "desc": "Bánh kem \"khu rừng đen\", sự kết hợp hương vị hòa quyện tuyệt vời của cốt bánh socola cùng với vị chua nhẹ của mứt cherry, trang trí thêm socola và mứt cherry",
+    "img": "https://r2.cms.4handy.vn/banh-kem-black-forest-1024x1023.png"
   }
 ];
