@@ -155,104 +155,6 @@ export const CATEGORIES = [
 
 export const PRODUCTS = [
   {
-    "id": "C001",
-    "cat": "cake1",
-    "name": "Bánh Oreo Sâu Nhỏ",
-    "desc": "Kem trắng, Oreo mắt tròn vui nhộn",
-    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIk50SraTz7dEOSMaZFfxo0rQOnqR357IWczWrnTyXt3jvVqpjJfT6i3i8yly-d9nHNIeKgbUYtoF0tJydITQyMSkL9AR0KoopWPZFzeo&s=10"
-  },
-  {
-    "id": "C002",
-    "cat": "cake1",
-    "name": "Bánh Birthday Tối Giản",
-    "desc": "Kem trắng, Oreo mắt tròn vui nhộn",
-    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIk50SraTz7dEOSMaZFfxo0rQOnqR357IWczWrnTyXt3jvVqpjJfT6i3i8yly-d9nHNIeKgbUYtoF0tJydITQyMSkL9AR0KoopWPZFzeo&s=10"
-  },
-  {
-    "id": "C003",
-    "cat": "cake1",
-    "name": "Bánh Kitty & My Melody",
-    "desc": "Kem trắng, Oreo mắt tròn vui nhộn",
-    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIk50SraTz7dEOSMaZFfxo0rQOnqR357IWczWrnTyXt3jvVqpjJfT6i3i8yly-d9nHNIeKgbUYtoF0tJydITQyMSkL9AR0KoopWPZFzeo&s=10"
-  },
-  {
-    "id": "C004",
-    "cat": "cake2",
-    "name": "Bánh Kem Trái Cây Tươi",
-    "desc": "Kem trắng, Oreo mắt tròn vui nhộn",
-    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIk50SraTz7dEOSMaZFfxo0rQOnqR357IWczWrnTyXt3jvVqpjJfT6i3i8yly-d9nHNIeKgbUYtoF0tJydITQyMSkL9AR0KoopWPZFzeo&s=10"
-  },
-  {
-    "id": "C005",
-    "cat": "cake2",
-    "name": "Bánh Oreo Sâu Nhỏ",
-    "desc": "Kem trắng, Oreo mắt tròn vui nhộn",
-    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIk50SraTz7dEOSMaZFfxo0rQOnqR357IWczWrnTyXt3jvVqpjJfT6i3i8yly-d9nHNIeKgbUYtoF0tJydITQyMSkL9AR0KoopWPZFzeo&s=10"
-  },
-  {
-    "id": "C006",
-    "cat": "cake2",
-    "name": "Bánh Oreo Sâu Nhỏ",
-    "desc": "Kem trắng, Oreo mắt tròn vui nhộn",
-    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIk50SraTz7dEOSMaZFfxo0rQOnqR357IWczWrnTyXt3jvVqpjJfT6i3i8yly-d9nHNIeKgbUYtoF0tJydITQyMSkL9AR0KoopWPZFzeo&s=10"
-  },
-  {
-    "id": "C007",
-    "cat": "cake3",
-    "name": "Cà phê đen",
-    "desc": "Đậm đà truyền thống",
-    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrdxrxUjmjoFJpaRN-ry7DOtewWkETfOaLhNZAeE-joBsKPLmD3fB85CA&s=10"
-  },
-  {
-    "id": "C008",
-    "cat": "cake3",
-    "name": "Cà phê sữa",
-    "desc": "Đen pha sữa đặc",
-    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrdxrxUjmjoFJpaRN-ry7DOtewWkETfOaLhNZAeE-joBsKPLmD3fB85CA&s=10"
-  },
-  {
-    "id": "C009",
-    "cat": "cake3",
-    "name": "Bạc xỉu",
-    "desc": "Nhiều sữa, nhẹ vị cà phê",
-    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrdxrxUjmjoFJpaRN-ry7DOtewWkETfOaLhNZAeE-joBsKPLmD3fB85CA&s=10"
-  },
-  {
-    "id": "C010",
-    "cat": "cake3",
-    "name": "Cà phê muối",
-    "desc": "Béo mặn hot trend",
-    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrdxrxUjmjoFJpaRN-ry7DOtewWkETfOaLhNZAeE-joBsKPLmD3fB85CA&s=10"
-  },
-  {
-    "id": "C011",
-    "cat": "cake4",
-    "name": "Nước ép cam",
-    "desc": "Cam tươi nguyên chất",
-    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrdxrxUjmjoFJpaRN-ry7DOtewWkETfOaLhNZAeE-joBsKPLmD3fB85CA&s=10"
-  },
-  {
-    "id": "C012",
-    "cat": "cake4",
-    "name": "Nước ép dứa",
-    "desc": "Ngọt thanh mát lạnh",
-    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrdxrxUjmjoFJpaRN-ry7DOtewWkETfOaLhNZAeE-joBsKPLmD3fB85CA&s=10"
-  },
-  {
-    "id": "C013",
-    "cat": "cake4",
-    "name": "Nước ép ổi",
-    "desc": "Giòn ngọt, giàu vitamin C",
-    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrdxrxUjmjoFJpaRN-ry7DOtewWkETfOaLhNZAeE-joBsKPLmD3fB85CA&s=10"
-  },
-  {
-    "id": "C014",
-    "cat": "cake4",
-    "name": "Nước ép cà rốt",
-    "desc": "Bổ mắt, vị dịu nhẹ",
-    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrdxrxUjmjoFJpaRN-ry7DOtewWkETfOaLhNZAeE-joBsKPLmD3fB85CA&s=10"
-  },
-  {
     "id": "C015",
     "cat": "cake5",
     "name": "Bánh mì",
@@ -314,5 +216,12 @@ export const PRODUCTS = [
     "name": "Bánh kem Black Forest",
     "desc": "Bánh kem \"khu rừng đen\", sự kết hợp hương vị hòa quyện tuyệt vời của cốt bánh socola cùng với vị chua nhẹ của mứt cherry, trang trí thêm socola và mứt cherry",
     "img": "https://r2.cms.4handy.vn/banh-kem-black-forest-1024x1023.png"
+  },
+  {
+    "id": "C024",
+    "cat": "cake1",
+    "name": "Bánh kem Xoài Chanh Leo",
+    "desc": "Bánh kem cốt vani, mứt xoài, nhân xoài tươi, kem vị chanh leo, trang trí thêm xoài tươi trên mặt",
+    "img": "https://r2.cms.4handy.vn/banh-kem-xoai-chanh-leo-1024x1024.jpg"
   }
 ];
