@@ -15,6 +15,7 @@ let tempSizes = []; // Temporary sizes for the category editor form
 let imageContent = ""; // Stores base64 data URI if uploaded locally
 let activeFilterTab = "all";
 let activeAdminTab = "products";
+let adminSearchQuery = "";
 
 // Element Selector helper
 const $ = (id) => document.getElementById(id);
@@ -27,6 +28,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (gitToken && gitRepo) {
     connectGitHub(true); // Attempt silent connection on startup
+  }
+
+  // Setup search filter for products in admin
+  const searchInput = $("adminSearchInput");
+  if (searchInput) {
+    searchInput.addEventListener("input", (e) => {
+      adminSearchQuery = e.target.value;
+      renderProductsList();
+    });
   }
 });
 
@@ -692,14 +702,21 @@ function renderProductsList() {
   if (!tbody) return;
 
   const filteredProds = PRODUCTS.filter(p => {
-    return activeFilterTab === "all" || p.cat === activeFilterTab;
+    const matchesCategory = activeFilterTab === "all" || p.cat === activeFilterTab;
+    const q = adminSearchQuery.trim().toLowerCase();
+    const matchesSearch = q === "" || 
+      (p.name && p.name.toLowerCase().includes(q)) ||
+      (p.desc && p.desc.toLowerCase().includes(q)) ||
+      (p.id && p.id.toLowerCase().includes(q)) ||
+      (p.code && p.code.toLowerCase().includes(q));
+    return matchesCategory && matchesSearch;
   });
 
   if (filteredProds.length === 0) {
     tbody.innerHTML = `
       <tr>
         <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 30px 0;">
-          Chưa có sản phẩm nào thuộc danh mục này.
+          Không tìm thấy sản phẩm nào phù hợp.
         </td>
       </tr>
     `;
