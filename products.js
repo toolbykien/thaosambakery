@@ -40,6 +40,14 @@ export const CATEGORIES = [
       {
         "label": "70CM",
         "price": 600000
+      },
+      {
+        "label": "75CM",
+        "price": 700000
+      },
+      {
+        "label": "85CM",
+        "price": 800000
       }
     ]
   },
@@ -102,6 +110,32 @@ export const CATEGORIES = [
       {
         "label": "2",
         "price": 10000
+      }
+    ]
+  },
+  {
+    "id": "cake6",
+    "name": "🍔 Đồ Ăn Vặt",
+    "sizes": [
+      {
+        "label": "Bim Bim",
+        "price": 10000
+      },
+      {
+        "label": "Xúc Xích",
+        "price": 15000
+      },
+      {
+        "label": "Kẹo",
+        "price": 5000
+      },
+      {
+        "label": "bánh gato mini",
+        "price": 15000
+      },
+      {
+        "label": "thạch",
+        "price": 20000
       }
     ]
   }
