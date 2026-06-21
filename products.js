@@ -48,20 +48,24 @@ export const CATEGORIES = [
     "name": "🧃 Bánh Gato Sự Kiện",
     "sizes": [
       {
-        "label": "50cm",
-        "price": 550000
-      },
-      {
-        "label": "55CM",
-        "price": 500000
-      },
-      {
         "label": "60CM",
         "price": 520000
       },
       {
         "label": "65CM",
         "price": 550000
+      },
+      {
+        "label": "70CM",
+        "price": 1
+      },
+      {
+        "label": "80CM",
+        "price": 2
+      },
+      {
+        "label": "90CM",
+        "price": 3
       }
     ]
   },
