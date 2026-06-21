@@ -652,7 +652,7 @@ window.submitOrderForm = function () {
 };
 
 function generateOrderText() {
-  const itemsText = cart.map(c => `• ${c.name} (Cỡ ${c.size}) x${c.qty} = ${formatPrice(c.price * c.qty)}`);
+  const itemsText = cart.map(c => `• ${c.name} (${c.size}) x${c.qty} = ${formatPrice(c.price * c.qty)}`);
   let fulfillmentDetails = "";
 
   if (fulfillmentType === "table") {
