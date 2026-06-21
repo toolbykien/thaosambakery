@@ -117,6 +117,7 @@ function renderMenu() {
         const matchCat = p.cat === cat.id;
         const matchSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
           p.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          (p.code && p.code.toLowerCase().includes(searchQuery.toLowerCase())) ||
           (p.desc && p.desc.toLowerCase().includes(searchQuery.toLowerCase()));
         return matchCat && matchSearch;
       });
@@ -164,7 +165,7 @@ function renderCategorySection(cat, filtered) {
           <span class="card-badge">${cat.name.split(" ")[1] || "Món"}</span>
         </div>
         <div class="card-body">
-          <h4 class="card-name">${p.name} - ${p.id}</h4>
+          <h4 class="card-name">${p.name} - ${p.code || p.id}</h4>
           <p class="card-desc">${p.desc || ""}</p>
           <div class="card-foot">
             <div class="card-price-info">
@@ -324,8 +325,8 @@ window.openProductCustomizer = function (productId) {
 
   // Hiển thị chi tiết sản phẩm bên trong trang tùy chỉnh
   $("psheetImg").src = product.img;
-  $("psheetImg").alt = `${product.name} - ${product.id}`;
-  $("psheetName").textContent = `${product.name} - ${product.id}`;
+  $("psheetImg").alt = `${product.name} - ${product.code || product.id}`;
+  $("psheetName").textContent = `${product.name} - ${product.code || product.id}`;
   $("psheetDesc").textContent = product.desc || "Hương vị thơm ngon, chế biến tươi mới trong ngày.";
 
   // Bộ chọn tùy chọn kích thước hiển thị
@@ -374,7 +375,7 @@ window.addCurrentToCart = function () {
   } else {
     cart.push({
       id: currentProduct.id,
-      name: `${currentProduct.name} - ${currentProduct.id}`,
+      name: `${currentProduct.name} - ${currentProduct.code || currentProduct.id}`,
       cat: currentProduct.cat,
       img: currentProduct.img,
       size: selectedSize.label,
@@ -385,7 +386,7 @@ window.addCurrentToCart = function () {
 
   saveCart();
   closeAllSheets();
-  showToast(`Đã thêm ${currentQty}x ${currentProduct.name} - ${currentProduct.id} vào giỏ hàng`);
+  showToast(`Đã thêm ${currentQty}x ${currentProduct.name} - ${currentProduct.code || currentProduct.id} vào giỏ hàng`);
 };
 
 /* ==========================================================================

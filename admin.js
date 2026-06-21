@@ -339,15 +339,17 @@ function handleFormSubmit(event) {
       showToast(`Đã cập nhật: ${name}`);
     }
   } else {
-    const newId = generateProductCode();
+    const newId = generateProductId();
+    const productCode = generateProductCode();
     PRODUCTS.push({
       id: newId,
       cat: cat,
       name: name,
+      code: productCode,
       desc: desc,
       img: imageContent
     });
-    showToast(`Đã thêm món mới: ${name} - ${newId}`);
+    showToast(`Đã thêm món mới: ${name} - ${productCode}`);
   }
 
   resetForm();
@@ -366,12 +368,22 @@ function generateProductCode() {
     for (let i = 0; i < 2; i++) {
       code += digits.charAt(Math.floor(Math.random() * digits.length));
     }
-    const isDuplicate = PRODUCTS.some(p => p.id === code);
+    const isDuplicate = PRODUCTS.some(p => p.code === code);
     if (!isDuplicate) {
       break;
     }
   }
   return code;
+}
+
+function generateProductId() {
+  if (PRODUCTS.length === 0) return "C001";
+  const ids = PRODUCTS.map(p => {
+    const num = parseInt(p.id.replace(/[A-Za-z]/g, ""));
+    return isNaN(num) ? 0 : num;
+  });
+  const maxId = Math.max(...ids);
+  return "C" + (maxId + 1).toString().padStart(3, "0");
 }
 
 function resetForm() {
@@ -707,7 +719,7 @@ function renderProductsList() {
         </td>
         <td>
           <span class="t-name">${p.name}</span><br>
-          <small style="color: var(--text-muted); font-family: 'Outfit';">${p.id}</small>
+          <small style="color: var(--text-muted); font-family: 'Outfit';">${p.id}${p.code ? ` (${p.code})` : ""}</small>
         </td>
         <td>
           <span class="t-badge">${catLabel}</span>
