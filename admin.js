@@ -6,15 +6,15 @@ let gitRepo = "";
 let gitBranch = "main";
 let originalSha = null;
 
-let CAKE1_SIZES = [];
-let CAKE2_SIZES = [];
-let CAKE3_SIZES = [];
-let CAKE4_SIZES = [];
+let CATEGORIES = [];
 let PRODUCTS = [];
 
 let editingProductId = null;
+let editingCategoryId = null;
+let tempSizes = []; // Temporary sizes for the category editor form
 let imageContent = ""; // Stores base64 data URI if uploaded locally
 let activeFilterTab = "all";
+let activeAdminTab = "products";
 
 // Element Selector helper
 const $ = (id) => document.getElementById(id);
@@ -24,7 +24,6 @@ const $ = (id) => document.getElementById(id);
 // ==========================================================================
 document.addEventListener("DOMContentLoaded", () => {
   loadCredentials();
-  renderFilterTabs();
   
   if (gitToken && gitRepo) {
     connectGitHub(true); // Attempt silent connection on startup
@@ -91,10 +90,7 @@ async function connectGitHub(silent = false) {
     const module = await import(blobUrl);
     
     // Populate variables
-    CAKE1_SIZES = module.CAKE1_SIZES || [];
-    CAKE2_SIZES = module.CAKE2_SIZES || [];
-    CAKE3_SIZES = module.CAKE3_SIZES || [];
-    CAKE4_SIZES = module.CAKE4_SIZES || [];
+    CATEGORIES = [...(module.CATEGORIES || [])];
     PRODUCTS = [...(module.PRODUCTS || [])];
 
     URL.revokeObjectURL(blobUrl);
@@ -103,7 +99,7 @@ async function connectGitHub(silent = false) {
     $("connectionStatus").className = "sb-info connected";
     $("connectionStatus").querySelector(".status-text").textContent = "Đã kết nối GitHub";
     $("connectAlert").style.display = "none";
-    $("editorSection").style.display = "grid";
+    $("editorSection").style.display = "block";
     $("btnReload").disabled = false;
     $("btnSave").disabled = false;
 
@@ -116,8 +112,11 @@ async function connectGitHub(silent = false) {
     showToast("Kết nối thành công! Đã tải danh sách sản phẩm.");
     
     // Initial renders
+    renderCategorySelectOptions();
+    renderFilterTabs();
     handleCategoryChange();
     renderProductsList();
+    renderCategoriesList();
   } catch (error) {
     console.error(error);
     $("connectionStatus").className = "sb-info";
@@ -155,13 +154,7 @@ async function saveChanges() {
     }
 
     // 2. Compile updated products.js file content
-    const compiledCode = `export const CAKE1_SIZES = ${JSON.stringify(CAKE1_SIZES, null, 2)};
-
-export const CAKE2_SIZES = ${JSON.stringify(CAKE2_SIZES, null, 2)};
-
-export const CAKE3_SIZES = ${JSON.stringify(CAKE3_SIZES, null, 2)};
-
-export const CAKE4_SIZES = ${JSON.stringify(CAKE4_SIZES, null, 2)};
+    const compiledCode = `export const CATEGORIES = ${JSON.stringify(CATEGORIES, null, 2)};
 
 export const PRODUCTS = ${JSON.stringify(PRODUCTS, null, 2)};
 `;
@@ -177,7 +170,7 @@ export const PRODUCTS = ${JSON.stringify(PRODUCTS, null, 2)};
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        message: "admin: cập nhật danh sách thực đơn sản phẩm",
+        message: "admin: cập nhật danh sách thực đơn sản phẩm & danh mục",
         content: base64Content,
         sha: originalSha,
         branch: gitBranch
@@ -209,6 +202,7 @@ function decodeBase64Utf8(str) {
   return new TextDecoder("utf-8").decode(bytes);
 }
 
+// Safe base64 encoding supporting Vietnamese characters
 function encodeBase64Utf8(str) {
   const bytes = new TextEncoder().encode(str);
   let binary = "";
@@ -226,13 +220,11 @@ function handleImageFile(event) {
   const file = event.target.files[0];
   if (!file) return;
 
-  // Convert file to base64
   const reader = new FileReader();
   reader.onload = function(e) {
-    imageContent = e.target.result; // data url base64
-    $("prodImgUrl").value = ""; // Clear direct url field
+    imageContent = e.target.result;
+    $("prodImgUrl").value = "";
     
-    // Show preview
     $("imgPreview").src = imageContent;
     $("imgPreview").style.display = "block";
     $("imgPlaceholder").style.display = "none";
@@ -243,10 +235,9 @@ function handleImageFile(event) {
 function handleImageUrlInput() {
   const url = $("prodImgUrl").value.trim();
   if (url) {
-    imageContent = url; // Use URL directly
-    $("imageFile").value = ""; // Clear file selector
+    imageContent = url;
+    $("imageFile").value = "";
 
-    // Show preview
     $("imgPreview").src = url;
     $("imgPreview").style.display = "block";
     $("imgPlaceholder").style.display = "none";
@@ -263,17 +254,55 @@ function resetImagePreview() {
 }
 
 // ==========================================================================
-// FORM CRUD HANDLERS
+// ADMIN TABS SWITCHER
+// ==========================================================================
+function switchAdminTab(tabName) {
+  activeAdminTab = tabName;
+  
+  const tabBtnProducts = $("tabBtnProducts");
+  const tabBtnCategories = $("tabBtnCategories");
+  const productsContent = $("productsTabContent");
+  const categoriesContent = $("categoriesTabContent");
+
+  if (tabName === "products") {
+    tabBtnProducts.classList.add("active");
+    tabBtnCategories.classList.remove("active");
+    productsContent.style.display = "grid";
+    categoriesContent.style.display = "none";
+    renderProductsList();
+  } else {
+    tabBtnProducts.classList.remove("active");
+    tabBtnCategories.classList.add("active");
+    productsContent.style.display = "none";
+    categoriesContent.style.display = "grid";
+    renderCategoriesList();
+  }
+}
+
+// Render dynamic dropdown options in Product Form
+function renderCategorySelectOptions() {
+  const select = $("prodCat");
+  if (!select) return;
+  select.innerHTML = CATEGORIES.map(cat => `
+    <option value="${cat.id}">${cat.name}</option>
+  `).join("");
+}
+
+// ==========================================================================
+// FORM PRODUCTS CRUD HANDLERS
 // ==========================================================================
 function handleCategoryChange() {
-  const cat = $("prodCat").value;
+  const catId = $("prodCat").value;
   const list = $("sizesPreviewList");
-  let sizes = [];
+  if (!list) return;
 
-  if (cat === "cake1") sizes = CAKE1_SIZES;
-  else if (cat === "cake2") sizes = CAKE2_SIZES;
-  else if (cat === "cake3") sizes = CAKE3_SIZES;
-  else if (cat === "cake4") sizes = CAKE4_SIZES;
+  const catObj = CATEGORIES.find(c => c.id === catId);
+  const sizes = catObj ? (catObj.sizes || []) : [];
+
+  if (sizes.length === 0) {
+    list.innerHTML = `<div style="font-size:12px;color:var(--text-muted);">Không có kích cỡ nào được cấu hình cho danh mục này.</div>`;
+    return;
+  }
 
   list.innerHTML = sizes.map(sz => `
     <div class="size-preview-item">
@@ -301,7 +330,6 @@ function handleFormSubmit(event) {
   }
 
   if (editingProductId) {
-    // Edit existing product
     const prod = PRODUCTS.find(p => p.id === editingProductId);
     if (prod) {
       prod.name = name;
@@ -311,7 +339,6 @@ function handleFormSubmit(event) {
       showToast(`Đã cập nhật: ${name}`);
     }
   } else {
-    // Create new product
     const newId = generateProductId();
     PRODUCTS.push({
       id: newId,
@@ -329,18 +356,12 @@ function handleFormSubmit(event) {
 
 function generateProductId() {
   if (PRODUCTS.length === 0) return "C001";
-  
-  // Extract numbers from IDs (e.g. "C014" -> 14)
   const ids = PRODUCTS.map(p => {
     const num = parseInt(p.id.replace(/[A-Za-z]/g, ""));
     return isNaN(num) ? 0 : num;
   });
-
   const maxId = Math.max(...ids);
-  const nextId = maxId + 1;
-  
-  // Pad with leading zeros (e.g. C015)
-  return "C" + nextId.toString().padStart(3, "0");
+  return "C" + (maxId + 1).toString().padStart(3, "0");
 }
 
 function resetForm() {
@@ -352,7 +373,9 @@ function resetForm() {
   $("prodDesc").value = "";
   $("prodImgUrl").value = "";
   $("imageFile").value = "";
-  $("prodCat").selectedIndex = 0;
+  if ($("prodCat").options.length > 0) {
+    $("prodCat").selectedIndex = 0;
+  }
   
   $("formTitle").textContent = "Thêm sản phẩm mới";
   $("btnSubmitForm").textContent = "Thêm sản phẩm";
@@ -362,7 +385,6 @@ function resetForm() {
   handleCategoryChange();
 }
 
-// Start Edit mode
 function editProduct(id) {
   const prod = PRODUCTS.find(p => p.id === id);
   if (!prod) return;
@@ -374,14 +396,11 @@ function editProduct(id) {
   $("prodDesc").value = prod.desc || "";
   $("prodCat").value = prod.cat;
   
-  // Populate image
   imageContent = prod.img;
   if (prod.img.startsWith("data:")) {
-    // base64
     $("prodImgUrl").value = "";
     $("imgPreview").src = prod.img;
   } else {
-    // direct URL
     $("prodImgUrl").value = prod.img;
     $("imgPreview").src = prod.img;
   }
@@ -393,12 +412,9 @@ function editProduct(id) {
   $("btnCancelEdit").style.display = "inline-flex";
 
   handleCategoryChange();
-  
-  // Scroll form into view if layout wraps on small screens
   $("productForm").scrollIntoView({ behavior: "smooth" });
 }
 
-// Delete product locally
 function deleteProduct(id) {
   const prod = PRODUCTS.find(p => p.id === id);
   if (!prod) return;
@@ -406,32 +422,236 @@ function deleteProduct(id) {
   if (confirm(`Bạn chắc chắn muốn xóa món: ${prod.name}? (Nhấn Lưu sau đó để đẩy lên GitHub)`)) {
     PRODUCTS = PRODUCTS.filter(p => p.id !== id);
     showToast(`Đã xóa món: ${prod.name}`);
-    
-    // If deleted the item currently being edited
     if (editingProductId === id) {
       resetForm();
     }
-    
     renderProductsList();
   }
 }
 
 // ==========================================================================
-// RENDERERS
+// CATEGORIES & SIZES CRUD HANDLERS
+// ==========================================================================
+function renderTempSizes() {
+  const container = $("tempSizesList");
+  if (!container) return;
+
+  if (tempSizes.length === 0) {
+    container.innerHTML = `<div style="font-size:12px;color:var(--text-muted);padding:8px 0;">Chưa thêm kích cỡ nào.</div>`;
+    return;
+  }
+
+  container.innerHTML = tempSizes.map((sz, index) => `
+    <div class="temp-size-badge">
+      <span>${sz.label} (${formatPrice(sz.price)})</span>
+      <button type="button" class="btn-remove-size" onclick="removeSizeFromTempList(${index})">&times;</button>
+    </div>
+  `).join("");
+}
+
+function addSizeToTempList() {
+  const labelInput = $("newSizeLabel");
+  const priceInput = $("newSizePrice");
+  
+  const label = labelInput.value.trim();
+  const priceVal = priceInput.value.trim();
+
+  if (!label || !priceVal) {
+    showToast("Vui lòng điền nhãn và giá cho kích cỡ!");
+    return;
+  }
+
+  const price = parseInt(priceVal);
+  if (isNaN(price) || price < 0) {
+    showToast("Giá không hợp lệ!");
+    return;
+  }
+
+  if (tempSizes.some(s => s.label.toLowerCase() === label.toLowerCase())) {
+    showToast("Cỡ này đã được thêm!");
+    return;
+  }
+
+  tempSizes.push({ label, price });
+  labelInput.value = "";
+  priceInput.value = "";
+  renderTempSizes();
+}
+
+function removeSizeFromTempList(index) {
+  tempSizes.splice(index, 1);
+  renderTempSizes();
+}
+
+function renderCategoriesList() {
+  const tbody = $("categoriesTableBody");
+  if (!tbody) return;
+
+  if (CATEGORIES.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="4" style="text-align: center; color: var(--text-muted); padding: 30px 0;">
+          Chưa có danh mục nào.
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  tbody.innerHTML = CATEGORIES.map(cat => {
+    const sizesStr = cat.sizes && cat.sizes.length > 0
+      ? cat.sizes.map(sz => `${sz.label}: <strong>${formatPrice(sz.price)}</strong>`).join(", ")
+      : "<em style='color:var(--text-muted)'>Chưa có cỡ</em>";
+
+    return `
+      <tr>
+        <td>
+          <small style="color: var(--text-muted); font-family: 'Outfit'; font-weight: 600;">${cat.id}</small>
+        </td>
+        <td>
+          <span class="t-name">${cat.name}</span>
+        </td>
+        <td>
+          <span style="font-size: 13px;">${sizesStr}</span>
+        </td>
+        <td>
+          <div class="table-actions">
+            <button class="btn-icon btn-edit-icon" onclick="editCategory('${cat.id}')" title="Chỉnh sửa">
+              ✏️
+            </button>
+            <button class="btn-icon btn-delete-icon" onclick="deleteCategory('${cat.id}')" title="Xóa">
+              🗑️
+            </button>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join("");
+}
+
+function handleCategoryFormSubmit(event) {
+  event.preventDefault();
+
+  const name = $("catName").value.trim();
+  if (!name) {
+    showToast("Vui lòng nhập tên danh mục!");
+    return;
+  }
+
+  if (tempSizes.length === 0) {
+    showToast("Danh mục phải có ít nhất 1 kích cỡ!");
+    return;
+  }
+
+  if (editingCategoryId) {
+    const cat = CATEGORIES.find(c => c.id === editingCategoryId);
+    if (cat) {
+      cat.name = name;
+      cat.sizes = [...tempSizes];
+      showToast(`Đã cập nhật danh mục: ${name}`);
+    }
+  } else {
+    const newId = generateCategoryId();
+    CATEGORIES.push({
+      id: newId,
+      name: name,
+      sizes: [...tempSizes]
+    });
+    showToast(`Đã thêm danh mục mới: ${name}`);
+  }
+
+  resetCategoryForm();
+  renderCategorySelectOptions();
+  renderFilterTabs();
+  renderCategoriesList();
+}
+
+function generateCategoryId() {
+  if (CATEGORIES.length === 0) return "cake1";
+  const ids = CATEGORIES.map(c => {
+    const num = parseInt(c.id.replace("cake", ""));
+    return isNaN(num) ? 0 : num;
+  });
+  const maxId = Math.max(...ids);
+  return "cake" + (maxId + 1);
+}
+
+function resetCategoryForm() {
+  editingCategoryId = null;
+  tempSizes = [];
+  
+  $("catId").value = "";
+  $("catName").value = "";
+  $("newSizeLabel").value = "";
+  $("newSizePrice").value = "";
+  
+  $("catFormTitle").textContent = "Thêm danh mục mới";
+  $("btnSubmitCatForm").textContent = "Thêm danh mục";
+  $("btnCancelCatEdit").style.display = "none";
+  
+  renderTempSizes();
+}
+
+function editCategory(id) {
+  const cat = CATEGORIES.find(c => c.id === id);
+  if (!cat) return;
+
+  editingCategoryId = id;
+  tempSizes = [...(cat.sizes || [])];
+
+  $("catId").value = cat.id;
+  $("catName").value = cat.name;
+
+  $("catFormTitle").textContent = `Chỉnh sửa: ${cat.name}`;
+  $("btnSubmitCatForm").textContent = "Cập nhật danh mục";
+  $("btnCancelCatEdit").style.display = "inline-flex";
+
+  renderTempSizes();
+  $("categoryForm").scrollIntoView({ behavior: "smooth" });
+}
+
+function deleteCategory(id) {
+  const cat = CATEGORIES.find(c => c.id === id);
+  if (!cat) return;
+
+  const countProducts = PRODUCTS.filter(p => p.cat === id).length;
+  const message = countProducts > 0
+    ? `Cảnh báo: Danh mục "${cat.name}" đang có ${countProducts} sản phẩm. Xóa danh mục này sẽ xóa tất cả sản phẩm thuộc về nó. Bạn chắc chắn chứ?`
+    : `Bạn chắc chắn muốn xóa danh mục: ${cat.name}?`;
+
+  if (confirm(message)) {
+    CATEGORIES = CATEGORIES.filter(c => c.id !== id);
+    PRODUCTS = PRODUCTS.filter(p => p.cat !== id);
+    
+    showToast(`Đã xóa danh mục: ${cat.name}`);
+
+    if (editingCategoryId === id) {
+      resetCategoryForm();
+    }
+    if (activeFilterTab === id) {
+      activeFilterTab = "all";
+    }
+
+    renderCategorySelectOptions();
+    renderFilterTabs();
+    renderProductsList();
+    renderCategoriesList();
+  }
+}
+
+// ==========================================================================
+// RENDERERS FOR PRODUCTS
 // ==========================================================================
 function renderFilterTabs() {
   const container = $("tabFilters");
   if (!container) return;
 
-  const categories = [
+  const tabs = [
     { id: "all", name: "Tất cả" },
-    { id: "cake1", name: "Gato Kỷ Niệm" },
-    { id: "cake2", name: "Gato Tiệc Cưới" },
-    { id: "cake3", name: "Gato Sự Kiện" },
-    { id: "cake4", name: "Gato Thường Ngày" }
+    ...CATEGORIES.map(cat => ({ id: cat.id, name: cat.name }))
   ];
 
-  container.innerHTML = categories.map(cat => `
+  container.innerHTML = tabs.map(cat => `
     <button class="tab-filter-btn ${cat.id === activeFilterTab ? 'active' : ''}" 
             onclick="setFilterTab('${cat.id}')">
       ${cat.name}
@@ -449,7 +669,6 @@ function renderProductsList() {
   const tbody = $("productsTableBody");
   if (!tbody) return;
 
-  // Filter products by tab
   const filteredProds = PRODUCTS.filter(p => {
     return activeFilterTab === "all" || p.cat === activeFilterTab;
   });
@@ -466,9 +685,8 @@ function renderProductsList() {
   }
 
   tbody.innerHTML = filteredProds.map(p => {
-    // Get clean category name
-    const catObj = $("prodCat").querySelector(`option[value="${p.cat}"]`);
-    const catLabel = catObj ? catObj.textContent.split(" ")[1] || "Món" : "Món";
+    const catObj = CATEGORIES.find(c => c.id === p.cat);
+    const catLabel = catObj ? catObj.name.split(" ").slice(1).join(" ") || "Món" : "Món";
 
     return `
       <tr>
@@ -546,3 +764,10 @@ window.deleteProduct = deleteProduct;
 window.setFilterTab = setFilterTab;
 window.toggleSidebarConfig = toggleSidebarConfig;
 
+window.switchAdminTab = switchAdminTab;
+window.addSizeToTempList = addSizeToTempList;
+window.removeSizeFromTempList = removeSizeFromTempList;
+window.handleCategoryFormSubmit = handleCategoryFormSubmit;
+window.resetCategoryForm = resetCategoryForm;
+window.editCategory = editCategory;
+window.deleteCategory = deleteCategory;

@@ -776,4 +776,128 @@ input[type="file"] {
     width: 28px;
     height: 28px;
   }
+
+  /* Responsive for new tab switcher & size manager */
+  .admin-tab-nav {
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+  .admin-tab-btn {
+    flex-grow: 1;
+    font-size: 13px;
+    padding: 8px 8px;
+    text-align: center;
+  }
+  .size-input-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .size-input-row .btn {
+    width: 100%;
+  }
+}
+
+/* ==========================================================================
+   NEW ADMIN COMPONENT STYLES (DESKTOP / DEFAULT)
+   ========================================================================== */
+/* Admin Main Tabs Nav */
+.admin-tab-nav {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 8px;
+}
+
+.admin-tab-btn {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 8px 16px;
+  color: var(--text-muted);
+  border-radius: var(--r-sm);
+  background: transparent;
+  transition: var(--transition);
+  border: 1.5px solid transparent;
+}
+
+.admin-tab-btn:hover {
+  color: var(--primary);
+  background: rgba(197, 168, 128, 0.1);
+}
+
+.admin-tab-btn.active {
+  color: #fff;
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+/* Category Sizes Creator Manager */
+.sizes-manager-box {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--bg-cream);
+  padding: 14px;
+  border-radius: var(--r-md);
+  border: 1.5px solid var(--border-color);
+}
+
+.size-input-row {
+  display: flex;
+  gap: 8px;
+}
+
+.size-input-row input[type="text"],
+.size-input-row input[type="number"] {
+  flex-grow: 1;
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+.size-input-row .btn {
+  padding: 8px 14px;
+  font-size: 12.5px;
+}
+
+.temp-sizes-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.temp-size-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 99px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary-light);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-remove-size {
+  border: none;
+  background: transparent;
+  color: var(--red-cta);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  padding: 0 2px;
+  line-height: 1;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  transition: var(--transition);
+}
+
+.btn-remove-size:hover {
+  background: rgba(177, 28, 34, 0.1);
 }

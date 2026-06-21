@@ -80,87 +80,152 @@
         Vui lòng điền thông tin cấu hình GitHub ở cột bên trái và nhấn kết nối để tải danh sách sản phẩm.
       </div>
 
-      <div class="dashboard-grid" id="editorSection" style="display: none;">
-        <!-- Left Pane: Product Form -->
-        <section class="pane form-pane">
-          <h3 class="pane-title" id="formTitle">Thêm sản phẩm mới</h3>
-          <form id="productForm" onsubmit="handleFormSubmit(event)">
-            <input type="hidden" id="prodId">
+      <div id="editorSection" style="display: none;">
+        <!-- Admin Tab Switcher -->
+        <div class="admin-tab-nav" id="adminTabNav">
+          <button class="admin-tab-btn active" id="tabBtnProducts" onclick="switchAdminTab('products')">
+            📦 Quản lý sản phẩm
+          </button>
+          <button class="admin-tab-btn" id="tabBtnCategories" onclick="switchAdminTab('categories')">
+            📁 Quản lý danh mục & Kích cỡ
+          </button>
+        </div>
+
+        <!-- ===================== PRODUCTS TAB CONTENT ===================== -->
+        <div class="dashboard-grid" id="productsTabContent">
+          <!-- Left Pane: Product Form -->
+          <section class="pane form-pane">
+            <h3 class="pane-title" id="formTitle">Thêm sản phẩm mới</h3>
+            <form id="productForm" onsubmit="handleFormSubmit(event)">
+              <input type="hidden" id="prodId">
+              
+              <div class="form-group">
+                <label for="prodName">Tên sản phẩm <span class="required">*</span></label>
+                <input type="text" id="prodName" required placeholder="Ví dụ: Bánh Oreo Matcha">
+              </div>
+
+              <div class="form-group">
+                <label for="prodCat">Danh mục <span class="required">*</span></label>
+                <select id="prodCat" required onchange="handleCategoryChange()">
+                  <!-- Dynamic categories option list loaded here -->
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="prodDesc">Mô tả sản phẩm</label>
+                <textarea id="prodDesc" rows="3" placeholder="Mô tả hương vị, nguyên liệu..."></textarea>
+              </div>
+
+              <div class="form-group">
+                <label>Hình ảnh sản phẩm <span class="required">*</span></label>
+                <div class="image-upload-wrapper">
+                  <input type="file" id="imageFile" accept="image/*" onchange="handleImageFile(event)">
+                  <div class="or-divider">hoặc nhập URL trực tiếp</div>
+                  <input type="text" id="prodImgUrl" placeholder="https://example.com/image.jpg" oninput="handleImageUrlInput()">
+                </div>
+                <div class="image-preview-box">
+                  <img id="imgPreview" src="" alt="Xem trước hình ảnh" style="display: none;">
+                  <div class="img-preview-placeholder" id="imgPlaceholder">Chưa có ảnh</div>
+                </div>
+              </div>
+
+              <div class="form-group" id="sizesConfigContainer">
+                <label>Xem trước các cỡ và giá sẽ áp dụng:</label>
+                <div class="sizes-preview-list" id="sizesPreviewList">
+                  <!-- Sizes based on categories will show here -->
+                </div>
+                <small class="hint">Các mức giá cỡ bánh được cấu hình tự động dựa trên danh mục đã chọn.</small>
+              </div>
+
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary" id="btnSubmitForm">Thêm sản phẩm</button>
+                <button type="button" class="btn btn-ghost" id="btnCancelEdit" onclick="resetForm()" style="display: none;">Hủy sửa</button>
+              </div>
+            </form>
+          </section>
+
+          <!-- Right Pane: Products List Grid -->
+          <section class="pane list-pane">
+            <div class="pane-header-row">
+              <h3 class="pane-title">Danh sách hiện tại</h3>
+              <div class="tab-filters" id="tabFilters">
+                <!-- Dynamic tabs for filtering list -->
+              </div>
+            </div>
             
-            <div class="form-group">
-              <label for="prodName">Tên sản phẩm <span class="required">*</span></label>
-              <input type="text" id="prodName" required placeholder="Ví dụ: Bánh Oreo Matcha">
+            <div class="products-table-wrapper">
+              <table class="products-table">
+                <thead>
+                  <tr>
+                    <th>Ảnh</th>
+                    <th>Tên món</th>
+                    <th>Danh mục</th>
+                    <th>Mô tả</th>
+                    <th style="text-align: right;">Hành động</th>
+                  </tr>
+                </thead>
+                <tbody id="productsTableBody">
+                  <!-- Products rendered here -->
+                </tbody>
+              </table>
             </div>
+          </section>
+        </div>
 
-            <div class="form-group">
-              <label for="prodCat">Danh mục <span class="required">*</span></label>
-              <select id="prodCat" required onchange="handleCategoryChange()">
-                <option value="cake1">🎂 Bánh Gato Kỷ Niệm & Chúc Mừng</option>
-                <option value="cake2">☕ Bánh Gato Tiệc Cưới</option>
-                <option value="cake3">🧃 Bánh Gato Sự Kiện</option>
-                <option value="cake4">☕ Bánh Gato Thường Ngày</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="prodDesc">Mô tả sản phẩm</label>
-              <textarea id="prodDesc" rows="3" placeholder="Mô tả hương vị, nguyên liệu..."></textarea>
-            </div>
-
-            <div class="form-group">
-              <label>Hình ảnh sản phẩm <span class="required">*</span></label>
-              <div class="image-upload-wrapper">
-                <input type="file" id="imageFile" accept="image/*" onchange="handleImageFile(event)">
-                <div class="or-divider">hoặc nhập URL trực tiếp</div>
-                <input type="text" id="prodImgUrl" placeholder="https://example.com/image.jpg" oninput="handleImageUrlInput()">
+        <!-- ===================== CATEGORIES TAB CONTENT ===================== -->
+        <div class="dashboard-grid" id="categoriesTabContent" style="display: none;">
+          <!-- Left Pane: Category Form -->
+          <section class="pane form-pane">
+            <h3 class="pane-title" id="catFormTitle">Thêm danh mục mới</h3>
+            <form id="categoryForm" onsubmit="handleCategoryFormSubmit(event)">
+              <input type="hidden" id="catId">
+              
+              <div class="form-group">
+                <label for="catName">Tên danh mục <span class="required">*</span></label>
+                <input type="text" id="catName" required placeholder="Ví dụ: 🎂 Bánh Kem Phô Mai">
               </div>
-              <div class="image-preview-box">
-                <img id="imgPreview" src="" alt="Xem trước hình ảnh" style="display: none;">
-                <div class="img-preview-placeholder" id="imgPlaceholder">Chưa có ảnh</div>
+
+              <div class="form-group">
+                <label>Kích cỡ & Giá bán <span class="required">*</span></label>
+                <div class="sizes-manager-box">
+                  <div class="size-input-row">
+                    <input type="text" id="newSizeLabel" placeholder="Cỡ (vd: M, L, 20cm)">
+                    <input type="number" id="newSizePrice" placeholder="Giá (vd: 35000)">
+                    <button type="button" class="btn btn-secondary" onclick="addSizeToTempList()">Thêm</button>
+                  </div>
+                  <div class="temp-sizes-list" id="tempSizesList">
+                    <!-- Sizes list rendered dynamically -->
+                  </div>
+                </div>
               </div>
-            </div>
 
-            <div class="form-group" id="sizesConfigContainer">
-              <label>Xem trước các cỡ và giá sẽ áp dụng:</label>
-              <div class="sizes-preview-list" id="sizesPreviewList">
-                <!-- Sizes based on categories will show here -->
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary" id="btnSubmitCatForm">Thêm danh mục</button>
+                <button type="button" class="btn btn-ghost" id="btnCancelCatEdit" onclick="resetCategoryForm()" style="display: none;">Hủy sửa</button>
               </div>
-              <small class="hint">Các mức giá cỡ bánh được cấu hình tự động dựa trên danh mục đã chọn.</small>
-            </div>
+            </form>
+          </section>
 
-            <div class="form-actions">
-              <button type="submit" class="btn btn-primary" id="btnSubmitForm">Thêm sản phẩm</button>
-              <button type="button" class="btn btn-ghost" id="btnCancelEdit" onclick="resetForm()" style="display: none;">Hủy sửa</button>
+          <!-- Right Pane: Categories List -->
+          <section class="pane list-pane">
+            <h3 class="pane-title">Danh sách danh mục</h3>
+            <div class="products-table-wrapper">
+              <table class="products-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Tên danh mục</th>
+                    <th>Kích cỡ & Giá bán</th>
+                    <th style="text-align: right;">Hành động</th>
+                  </tr>
+                </thead>
+                <tbody id="categoriesTableBody">
+                  <!-- Categories rendered dynamically -->
+                </tbody>
+              </table>
             </div>
-          </form>
-        </section>
-
-        <!-- Right Pane: Products List Grid -->
-        <section class="pane list-pane">
-          <div class="pane-header-row">
-            <h3 class="pane-title">Danh sách hiện tại</h3>
-            <div class="tab-filters" id="tabFilters">
-              <!-- Dynamic tabs for filtering list -->
-            </div>
-          </div>
-          
-          <div class="products-table-wrapper">
-            <table class="products-table">
-              <thead>
-                <tr>
-                  <th>Ảnh</th>
-                  <th>Tên món</th>
-                  <th>Danh mục</th>
-                  <th>Mô tả</th>
-                  <th style="text-align: right;">Hành động</th>
-                </tr>
-              </thead>
-              <tbody id="productsTableBody">
-                <!-- Products rendered here -->
-              </tbody>
-            </table>
-          </div>
-        </section>
+          </section>
+        </div>
       </div>
 
     </main>

@@ -1,4 +1,4 @@
-import { PRODUCTS, CAKE1_SIZES, CAKE2_SIZES, CAKE3_SIZES, CAKE4_SIZES } from './products.js';
+import { PRODUCTS, CATEGORIES } from './products.js';
 
 /* ==========================================================================
    CONFIG & WARD DATABASE
@@ -12,13 +12,6 @@ const CONFIG = {
   telegramToken: "8141649058:AAFr5zv-hEvXclVP7d_24M4e038L1m64qsQ",
   telegramChatId: "-5452133399"
 };
-
-const CATEGORIES = [
-  { id: "cake1", name: "🎂 Bánh Gato Kỷ Niệm & Chúc Mừng" },
-  { id: "cake2", name: "☕ Bánh Gato Tiệc Cưới" },
-  { id: "cake3", name: "🧃 Bánh Gato Sự Kiện" },
-  { id: "cake4", name: "☕ Bánh Gato Thường Ngày" },
-];
 /* ==========================================================================
    APP STATE
    ========================================================================== */
@@ -152,18 +145,15 @@ function renderCategorySection(cat, filtered) {
     let sizeText = "";
     let priceNum = 0;
 
-    if (p.cat === "cake1") {
-      sizeText = "Đường kính 15-25cm";
-      priceNum = CAKE1_SIZES[0].price;
-    } else if (p.cat === "cake2") {
-      sizeText = "Đường kính 55-65cm";
-      priceNum = CAKE2_SIZES[0].price;
-    } else if (p.cat === "cake3") {
-      sizeText = "Đường kính 55-65cm";
-      priceNum = CAKE3_SIZES[0].price;
-    } else if (p.cat === "cake4") {
-      sizeText = "Đường kính 55-65cm";
-      priceNum = CAKE4_SIZES[0].price;
+    const catObj = CATEGORIES.find(c => c.id === p.cat);
+    if (catObj && catObj.sizes && catObj.sizes.length > 0) {
+      const minSz = catObj.sizes[0].label;
+      const maxSz = catObj.sizes[catObj.sizes.length - 1].label;
+      sizeText = catObj.sizes.length > 1 ? `Cỡ ${minSz} - ${maxSz}` : `Cỡ ${minSz}`;
+      priceNum = catObj.sizes[0].price;
+    } else {
+      sizeText = "Liên hệ";
+      priceNum = 0;
     }
 
     return `
@@ -314,16 +304,8 @@ window.openProductCustomizer = function (productId) {
   currentQty = 1;
 
   // Xác định bộ tùy chọn kích thước dựa trên danh mục
-  let sizeOptions = [];
-  if (product.cat === "cake1") {
-    sizeOptions = CAKE1_SIZES;
-  } else if (product.cat === "cake2") {
-    sizeOptions = CAKE2_SIZES;
-  } else if (product.cat === "cake3") {
-    sizeOptions = CAKE3_SIZES;
-  } else if (product.cat === "cake4") {
-    sizeOptions = CAKE4_SIZES;
-  }
+  const catObj = CATEGORIES.find(c => c.id === product.cat);
+  const sizeOptions = catObj ? (catObj.sizes || []) : [];
 
   // Chọn trước tùy chọn kích thước đầu tiên
   selectedSize = sizeOptions[0];
