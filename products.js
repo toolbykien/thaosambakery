@@ -223,5 +223,13 @@ export const PRODUCTS = [
     "name": "Bánh kem Xoài Chanh Leo",
     "desc": "Bánh kem cốt vani, mứt xoài, nhân xoài tươi, kem vị chanh leo, trang trí thêm xoài tươi trên mặt",
     "img": "https://r2.cms.4handy.vn/banh-kem-xoai-chanh-leo-1024x1024.jpg"
+  },
+  {
+    "id": "C025",
+    "cat": "cake1",
+    "name": "Bông lan trứng muối Việt quất",
+    "code": "MIF90",
+    "desc": "Cốt bông lan mềm mịn kết hợp sốt bơ trứng và sốt phô mai béo ngậy, xen giữa chà bông heo và trứng muối ở mỗi lớp bánh, trang trí thêm việt quất tươi",
+    "img": "https://r2.cms.4handy.vn/banh-bltm-viet-quat-1024x1023.png"
   }
 ];
