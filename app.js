@@ -4,8 +4,8 @@ import { PRODUCTS, CATEGORIES } from './products.js';
    CONFIG & WARD DATABASE
    ========================================================================== */
 const CONFIG = {
-  phone: "0385535482",
-  zaloLink: "https://zalo.me/0385535482",
+  phone: "0978251639",
+  zaloLink: "https://zalo.me/0978251639",
   address: "Cổng VSIP, Bái Dương, Cẩm Giàng, Hải Phòng",
   mapQuery: "Thảo Sâm Bakery, Cổng VSIP, Bái Dương, Cẩm Giàng, Hải Phòng",
   shopName: "Thảo Sâm Bakery",
@@ -703,7 +703,7 @@ function showOrderSuccess(orderText) {
         <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
       </div>
       <h3>Đặt hàng thành công!</h3>
-      <p class="success-note">Cảm ơn bạn đã đặt bánh tại Thảo Sâm Bakery.<br>Bấm nút bên dưới để gửi đơn qua Zalo xác nhận đơn hàng.</p>
+      <p class="success-note">Cảm ơn bạn đã đặt bánh tại Thảo Sâm Bakery.<br>Dữ liệu đơn hàng đã được tự động Copy.<br>Bấm nút bên dưới và gửi đơn qua Zalo để xác nhận đơn hàng.</p>
       <div class="order-details-card">
         ${destination}
         <hr>
