@@ -202,6 +202,17 @@ function formatPrice(num) {
    EVENT LISTENERS & SYSTEM INTERFACES
    ========================================================================== */
 function setupEventListeners() {
+  // Dịch cuộn chuột dọc thành cuộn ngang cho thanh danh mục trên máy tính
+  const tabsContainer = $("tabsContainer");
+  if (tabsContainer) {
+    tabsContainer.addEventListener("wheel", (e) => {
+      if (tabsContainer.scrollWidth > tabsContainer.clientWidth) {
+        e.preventDefault();
+        tabsContainer.scrollLeft += e.deltaY;
+      }
+    }, { passive: false });
+  }
+
   // Speed dial toggle
   $("dialToggle").addEventListener("click", (e) => {
     e.stopPropagation();

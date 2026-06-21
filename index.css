@@ -489,8 +489,33 @@ a {
   scrollbar-width: none;
 }
 
+@media (hover: hover) {
+  .tabs-container {
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent) transparent;
+  }
+}
+
 .tabs-container::-webkit-scrollbar {
   display: none;
+}
+
+@media (hover: hover) {
+  .tabs-container::-webkit-scrollbar {
+    display: block;
+    height: 4px;
+  }
+  .tabs-container::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .tabs-container::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 10px;
+    transition: var(--transition);
+  }
+  .tabs-container::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+  }
 }
 
 .tab-item {
