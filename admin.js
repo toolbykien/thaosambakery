@@ -332,22 +332,24 @@ function handleFormSubmit(event) {
   if (editingProductId) {
     const prod = PRODUCTS.find(p => p.id === editingProductId);
     if (prod) {
-      prod.name = name;
+      const formattedName = `${name} - ${prod.id}`;
+      prod.name = formattedName;
       prod.cat = cat;
       prod.desc = desc;
       prod.img = imageContent;
-      showToast(`Đã cập nhật: ${name}`);
+      showToast(`Đã cập nhật: ${formattedName}`);
     }
   } else {
     const newId = generateProductId();
+    const formattedName = `${name} - ${newId}`;
     PRODUCTS.push({
       id: newId,
       cat: cat,
-      name: name,
+      name: formattedName,
       desc: desc,
       img: imageContent
     });
-    showToast(`Đã thêm món mới: ${name}`);
+    showToast(`Đã thêm món mới: ${formattedName}`);
   }
 
   resetForm();
@@ -355,13 +357,25 @@ function handleFormSubmit(event) {
 }
 
 function generateProductId() {
-  if (PRODUCTS.length === 0) return "C001";
-  const ids = PRODUCTS.map(p => {
-    const num = parseInt(p.id.replace(/[A-Za-z]/g, ""));
-    return isNaN(num) ? 0 : num;
-  });
-  const maxId = Math.max(...ids);
-  return "C" + (maxId + 1).toString().padStart(3, "0");
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const digits = "0123456789";
+  let newId;
+  let attempts = 0;
+  
+  do {
+    let partLetters = "";
+    for (let i = 0; i < 3; i++) {
+      partLetters += letters.charAt(Math.floor(Math.random() * letters.length));
+    }
+    let partDigits = "";
+    for (let i = 0; i < 2; i++) {
+      partDigits += digits.charAt(Math.floor(Math.random() * digits.length));
+    }
+    newId = partLetters + partDigits;
+    attempts++;
+  } while (PRODUCTS.some(p => p.id === newId) && attempts < 10000);
+  
+  return newId;
 }
 
 function resetForm() {
@@ -392,7 +406,15 @@ function editProduct(id) {
   editingProductId = id;
   
   $("prodId").value = prod.id;
-  $("prodName").value = prod.name;
+  
+  // Clean up the suffix " - ID" from name if present
+  const suffix = ` - ${prod.id}`;
+  let baseName = prod.name;
+  if (baseName.endsWith(suffix)) {
+    baseName = baseName.substring(0, baseName.length - suffix.length);
+  }
+  $("prodName").value = baseName;
+  
   $("prodDesc").value = prod.desc || "";
   $("prodCat").value = prod.cat;
   
