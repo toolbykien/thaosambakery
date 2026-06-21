@@ -545,7 +545,7 @@ function renderFulfillmentFields() {
       </div>
       <div class="form-field">
         <label>Ghi chú đơn hàng</label>
-        <textarea id="coNoteT" placeholder="Ví dụ: Ghi 'Chúc mừng sinh nhật Long', lấy bánh lúc 18h,..."></textarea>
+        <textarea id="coNoteT" placeholder="Ví dụ: Ghi 'Happy Birthday', lấy bánh lúc 19h,..."></textarea>
       </div>
     `;
   } else {
@@ -563,8 +563,8 @@ function renderFulfillmentFields() {
         <input id="coAddr" type="text" placeholder="Thôn, xã, số nhà, tên đường...">
       </div>
       <div class="form-field">
-        <label>Ghi chú giao hàng</label>
-        <textarea id="coNote" placeholder="Ví dụ: giao giờ hành chính, gọi điện trước khi đến..."></textarea>
+        <label>Ghi chú đơn hàng</label>
+        <textarea id="coNote" placeholder="Ví dụ: Ghi 'Chúc mừng sinh nhật', giao hàng lúc 7h tối,..."></textarea>
       </div>
     `;
   }
