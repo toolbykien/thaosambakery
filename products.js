@@ -1,7 +1,7 @@
 export const CATEGORIES = [
   {
     "id": "cake1",
-    "name": "🎂 Bánh Gato Kỷ Niệm & Chúc Mừng",
+    "name": "🎂 Bánh Gato Sinh Nhật",
     "sizes": [
       {
         "label": "15cm",
