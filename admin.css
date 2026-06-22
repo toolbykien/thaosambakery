@@ -660,7 +660,7 @@ input[type="file"] {
   }
 
   .sidebar.collapsed {
-    width: 80px;
+    width: 50px;
     padding: 30px 12px;
     gap: 24px;
     align-items: center;
@@ -692,8 +692,8 @@ input[type="file"] {
   .sidebar.collapsed .sb-toggle-btn {
     padding: 10px;
     border-radius: 50%;
-    width: 44px;
-    height: 44px;
+    width: 35px;
+    height: 35px;
     justify-content: center;
     gap: 0;
   }
@@ -701,8 +701,8 @@ input[type="file"] {
   .sidebar.collapsed .sb-info {
     padding: 12px;
     border-radius: 50%;
-    width: 44px;
-    height: 44px;
+    width: 35px;
+    height: 35px;
     justify-content: center;
     gap: 0;
     margin-top: auto;
@@ -722,8 +722,8 @@ input[type="file"] {
   .sidebar.collapsed .sb-foot a {
     padding: 10px;
     border-radius: 50%;
-    width: 44px;
-    height: 44px;
+    width: 35px;
+    height: 35px;
     justify-content: center;
     gap: 0;
   }
@@ -835,11 +835,11 @@ input[type="file"] {
     margin-top: 4px;
   }
 
-  .products-table, 
-  .products-table thead, 
-  .products-table tbody, 
-  .products-table th, 
-  .products-table td, 
+  .products-table,
+  .products-table thead,
+  .products-table tbody,
+  .products-table th,
+  .products-table td,
   .products-table tr {
     display: block;
   }
@@ -1197,6 +1197,7 @@ input[type="file"] {
   color: var(--text-muted);
   display: -webkit-box;
   -webkit-line-clamp: 1;
+  line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -1238,4 +1239,76 @@ input[type="file"] {
   font-size: 9.5px;
   color: var(--text-muted);
   font-family: 'Outfit', sans-serif;
+}
+
+/* ==========================================================================
+   ADMIN PAGINATION CONTROLS
+   ========================================================================== */
+.admin-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1.5px solid var(--border-color);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.admin-pagination .pagination-info {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 500;
+}
+
+.admin-pagination .pagination-info strong {
+  color: var(--primary);
+}
+
+.admin-pagination .pagination-buttons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.admin-pagination .pagination-btn {
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 12.5px;
+  padding: 6px 14px;
+  border-radius: var(--r-sm);
+  border: 1.5px solid var(--border-color);
+  background: #fff;
+  color: var(--primary-light);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.admin-pagination .pagination-btn:hover:not(:disabled) {
+  background: var(--accent-light);
+  border-color: var(--accent);
+  color: var(--primary);
+}
+
+.admin-pagination .pagination-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background: var(--bg-cream);
+}
+
+.admin-pagination .pagination-page-num {
+  font-family: 'Outfit', sans-serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--primary);
+  padding: 0 6px;
+}
+
+@media (max-width: 576px) {
+  .admin-pagination {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
 }

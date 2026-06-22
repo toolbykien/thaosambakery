@@ -17,6 +17,8 @@ let activeFilterTab = "all";
 let activeAdminTab = "products";
 let adminSearchQuery = "";
 let recentlySavedProducts = [];
+let adminCurrentPage = 1;
+const adminPageSize = 15;
 
 // Element Selector helper
 const $ = (id) => document.getElementById(id);
@@ -36,6 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (searchInput) {
     searchInput.addEventListener("input", (e) => {
       adminSearchQuery = e.target.value;
+      adminCurrentPage = 1;
       renderProductsList();
     });
   }
@@ -273,7 +276,7 @@ function switchAdminTab(tabName) {
   const tabBtnProducts = $("tabBtnProducts");
   const tabBtnAddProduct = $("tabBtnAddProduct");
   const tabBtnCategories = $("tabBtnCategories");
-  
+
   const productsContent = $("productsTabContent");
   const addProductContent = $("addProductTabContent");
   const categoriesContent = $("categoriesTabContent");
@@ -413,13 +416,13 @@ function renderRecentlySavedProductsList() {
   box.innerHTML = `
     <div class="recently-saved-list">
       ${recentlySavedProducts.map(item => {
-        const product = item.product;
-        const catObj = CATEGORIES.find(c => c.id === product.cat);
-        const catName = catObj ? catObj.name : "Món";
-        const actionLabel = item.actionType === 'add' ? 'Thêm mới' : 'Cập nhật';
-        const badgeClass = item.actionType === 'add' ? 'badge-add' : 'badge-update';
+    const product = item.product;
+    const catObj = CATEGORIES.find(c => c.id === product.cat);
+    const catName = catObj ? catObj.name : "Món";
+    const actionLabel = item.actionType === 'add' ? 'Thêm mới' : 'Cập nhật';
+    const badgeClass = item.actionType === 'add' ? 'badge-add' : 'badge-update';
 
-        return `
+    return `
           <div class="recently-saved-item">
             <div class="item-img-wrapper">
               <img src="${product.img}" alt="${product.name}">
@@ -447,7 +450,7 @@ function renderRecentlySavedProductsList() {
             </div>
           </div>
         `;
-      }).join("")}
+  }).join("")}
     </div>
   `;
 
@@ -793,6 +796,7 @@ function renderFilterTabs() {
 
 function setFilterTab(tabId) {
   activeFilterTab = tabId;
+  adminCurrentPage = 1;
   renderFilterTabs();
   renderProductsList();
 }
@@ -804,13 +808,15 @@ function renderProductsList() {
   const filteredProds = PRODUCTS.filter(p => {
     const matchesCategory = activeFilterTab === "all" || p.cat === activeFilterTab;
     const q = adminSearchQuery.trim().toLowerCase();
-    const matchesSearch = q === "" || 
+    const matchesSearch = q === "" ||
       (p.name && p.name.toLowerCase().includes(q)) ||
       (p.desc && p.desc.toLowerCase().includes(q)) ||
       (p.id && p.id.toLowerCase().includes(q)) ||
       (p.code && p.code.toLowerCase().includes(q));
     return matchesCategory && matchesSearch;
   });
+
+  const pagContainer = $("adminPagination");
 
   if (filteredProds.length === 0) {
     tbody.innerHTML = `
@@ -820,10 +826,28 @@ function renderProductsList() {
         </td>
       </tr>
     `;
+    if (pagContainer) {
+      pagContainer.style.display = "none";
+      pagContainer.innerHTML = "";
+    }
     return;
   }
 
-  tbody.innerHTML = filteredProds.map(p => {
+  // Pagination calculation
+  const totalPages = Math.ceil(filteredProds.length / adminPageSize) || 1;
+  if (adminCurrentPage > totalPages) {
+    adminCurrentPage = totalPages;
+  }
+  if (adminCurrentPage < 1) {
+    adminCurrentPage = 1;
+  }
+
+  const startIndex = (adminCurrentPage - 1) * adminPageSize;
+  const endIndex = startIndex + adminPageSize;
+  const pageProds = filteredProds.slice(startIndex, endIndex);
+
+  // Render products for current page
+  tbody.innerHTML = pageProds.map(p => {
     const catObj = CATEGORIES.find(c => c.id === p.cat);
     const catLabel = catObj ? catObj.name.split(" ").slice(1).join(" ") || "Món" : "Món";
 
@@ -831,7 +855,7 @@ function renderProductsList() {
       <tr>
         <td>
           <div class="t-img-box">
-            <img src="${p.img}" alt="${p.name}">
+            <img src="${p.img}" alt="${p.name}" loading="lazy">
           </div>
         </td>
         <td>
@@ -857,6 +881,41 @@ function renderProductsList() {
       </tr>
     `;
   }).join("");
+
+  // Render pagination bar
+  if (pagContainer) {
+    if (filteredProds.length <= adminPageSize) {
+      pagContainer.style.display = "none";
+      pagContainer.innerHTML = "";
+    } else {
+      pagContainer.style.display = "flex";
+      pagContainer.innerHTML = `
+        <div class="pagination-info">
+          Hiển thị <strong>${startIndex + 1} - ${Math.min(endIndex, filteredProds.length)}</strong> trong tổng số <strong>${filteredProds.length}</strong> món
+        </div>
+        <div class="pagination-buttons">
+          <button type="button" class="pagination-btn" onclick="changeAdminPage(-1)" ${adminCurrentPage === 1 ? 'disabled' : ''}>
+            Trước
+          </button>
+          <span class="pagination-page-num">
+            Trang ${adminCurrentPage} / ${totalPages}
+          </span>
+          <button type="button" class="pagination-btn" onclick="changeAdminPage(1)" ${adminCurrentPage === totalPages ? 'disabled' : ''}>
+            Sau
+          </button>
+        </div>
+      `;
+    }
+  }
+}
+
+function changeAdminPage(delta) {
+  adminCurrentPage += delta;
+  renderProductsList();
+  const listPane = document.querySelector(".list-pane");
+  if (listPane) {
+    listPane.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 }
 
 // Utility to format currency values
@@ -912,3 +971,4 @@ window.resetCategoryForm = resetCategoryForm;
 window.editCategory = editCategory;
 window.deleteCategory = deleteCategory;
 window.clearRecentlySavedList = clearRecentlySavedList;
+window.changeAdminPage = changeAdminPage;

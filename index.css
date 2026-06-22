@@ -202,7 +202,8 @@ a {
   font-weight: 800;
   font-size: 22px;
   line-height: 1.1;
-  color: #25110f; /* Tông màu nâu đen sô-cô-la đậm, sang trọng và nổi bật */
+  color: #25110f;
+  /* Tông màu nâu đen sô-cô-la đậm, sang trọng và nổi bật */
   letter-spacing: -0.01em;
 }
 
@@ -272,10 +273,11 @@ a {
    ========================================================================== */
 .hero {
   position: relative;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  background: #3e2723;
+  /* Fallback brand cocoa color */
   color: #fff;
   overflow: hidden;
-  padding: 32px 20px 40px;
+  padding: 36px 20px 44px;
   border-bottom-left-radius: var(--r-lg);
   border-bottom-right-radius: var(--r-lg);
 }
@@ -284,14 +286,28 @@ a {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.06) 1px, transparent 0);
-  background-size: 24px 24px;
-  opacity: 0.8;
+  background-image: url('bakery_hero_bg.png');
+  background-size: cover;
+  background-position: center;
+  filter: blur(6px);
+  transform: scale(1.06);
+  /* Avoid white edges from blur */
+  opacity: 0.45;
+  /* Dark background showing through */
+  z-index: 1;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(62, 39, 35, 0.25) 0%, rgba(30, 16, 12, 0.88) 100%);
+  z-index: 2;
 }
 
 .hero-inner {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   display: flex;
   gap: 20px;
   align-items: center;
@@ -303,7 +319,7 @@ a {
   border-radius: var(--r-md);
   background: #fff;
   padding: 8px;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4);
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -333,25 +349,27 @@ a {
   font-weight: 700;
   line-height: 1.1;
   color: var(--accent-light);
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 .hero .tag {
   margin: 6px 0 0;
   font-size: 14px;
-  opacity: 0.9;
-  font-weight: 400;
+  opacity: 0.95;
+  font-weight: 500;
   font-family: 'Outfit', sans-serif;
   color: var(--accent);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 .hero .rating {
   font-size: 12px;
-  opacity: 0.85;
+  opacity: 0.9;
   margin-top: 8px;
   display: flex;
   align-items: center;
   gap: 6px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .rating-star {
@@ -362,55 +380,136 @@ a {
 /* Quick Actions Dial inside Hero */
 .quick-actions {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
-  margin-top: 24px;
+  gap: 10px;
+  margin-top: 26px;
   align-items: stretch;
 }
 
 .quick-btn {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: var(--r-md);
-  padding: 10px 4px 8px;
+  padding: 12px 4px 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  min-height: 76px;
-  gap: 4px;
+  min-height: 80px;
+  gap: 6px;
   color: #fff;
-  backdrop-filter: blur(8px);
-  transition: var(--transition);
-}
-
-.quick-btn:hover {
-  background: rgba(255, 255, 255, 0.16);
-  transform: translateY(-3px);
-  border-color: var(--accent);
-}
-
-.quick-btn:active {
-  transform: scale(0.95);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .quick-btn svg {
   width: 22px;
   height: 22px;
-  stroke: var(--accent);
   fill: none;
-  stroke-width: 2;
+  stroke-width: 2.2px;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), stroke 0.3s;
 }
 
 .quick-btn span {
   font-size: 11.5px;
   font-weight: 700;
   font-family: 'Outfit', sans-serif;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.02em;
   line-height: 1.2;
+}
+
+.quick-btn:active {
+  transform: scale(0.95) translateY(1px) !important;
+}
+
+/* Button Theming */
+.btn-order {
+  background: linear-gradient(135deg, rgba(197, 168, 128, 0.2) 0%, rgba(163, 130, 83, 0.9) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 12px rgba(197, 168, 128, 0.25);
+}
+
+.btn-order svg {
+  stroke: #fff;
+}
+
+.btn-order:hover {
+  background: linear-gradient(135deg, rgba(211, 183, 144, 1) 0%, rgba(178, 145, 97, 1) 100%);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(197, 168, 128, 0.45);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.btn-order:hover svg {
+  transform: scale(1.15) rotate(-3deg);
+}
+
+.btn-call {
+  background: rgba(46, 213, 115, 0.2);
+  border: 1px solid rgba(46, 213, 115, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.btn-call svg {
+  stroke: #2ed573;
+}
+
+.btn-call:hover {
+  background: rgba(46, 213, 115, 0.2);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(46, 213, 115, 0.35);
+  border-color: rgba(46, 213, 115, 0.45);
+}
+
+.btn-call:hover svg {
+  transform: scale(1.15) rotate(10deg);
+}
+
+.btn-zalo {
+  background: rgba(0, 104, 255, 0.2);
+  border: 1px solid rgba(0, 104, 255, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.btn-zalo svg {
+  stroke: #0084ff;
+}
+
+.btn-zalo:hover {
+  background: rgba(0, 104, 255, 0.2);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 104, 255, 0.35);
+  border-color: rgba(0, 104, 255, 0.45);
+}
+
+.btn-zalo:hover svg {
+  transform: scale(1.15) translateY(-2px);
+}
+
+.btn-map {
+  background: rgba(255, 71, 87, 0.2);
+  border: 1px solid rgba(255, 71, 87, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.btn-map svg {
+  stroke: #ff4757;
+}
+
+.btn-map:hover {
+  background: rgba(255, 71, 87, 0.2);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(255, 71, 87, 0.35);
+  border-color: rgba(255, 71, 87, 0.45);
+}
+
+.btn-map:hover svg {
+  transform: scale(1.15) translateY(-2px);
 }
 
 /* ==========================================================================
@@ -510,14 +609,17 @@ a {
     display: block;
     height: 4px;
   }
+
   .tabs-container::-webkit-scrollbar-track {
     background: transparent;
   }
+
   .tabs-container::-webkit-scrollbar-thumb {
     background: var(--border-color);
     border-radius: 10px;
     transition: var(--transition);
   }
+
   .tabs-container::-webkit-scrollbar-thumb:hover {
     background: var(--accent);
   }
@@ -900,6 +1002,7 @@ a {
 .fab.toggle {
   background: var(--primary);
   box-shadow: var(--shadow-lg);
+  border: 1.5px solid var(--accent);
 }
 
 .fab.toggle svg {
@@ -1731,7 +1834,7 @@ a {
   width: 48px;
   height: 48px;
   border-radius: var(--r-sm);
-  border: 2px solid var(--accent);
+  border: 1.5px solid var(--accent);
 }
 
 .footer .f-title {
@@ -1852,4 +1955,97 @@ a {
     transform: translateY(0) scale(1);
     opacity: 1;
   }
+}
+
+/* ==========================================================================
+   STOREFRONT PAGINATION CONTROLS
+   ========================================================================== */
+.storefront-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 32px 0;
+  width: 100%;
+}
+
+.sf-pagination-buttons {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  background: var(--card-bg);
+  padding: 8px 16px;
+  border-radius: 99px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+}
+
+.sf-pagination-btn {
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 6px 16px;
+  border-radius: 99px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-cream);
+  color: var(--primary);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.sf-pagination-btn:hover:not(:disabled) {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.sf-pagination-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background: var(--bg-cream);
+}
+
+.sf-pagination-page-num {
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--primary);
+  padding: 0 8px;
+}
+
+/* ==========================================================================
+   VIEW ALL CATEGORY PREVIEW BUTTONS
+   ========================================================================== */
+.view-all-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+  width: 100%;
+}
+
+.sf-view-all-btn {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+  font-size: 13.5px;
+  padding: 10px 24px;
+  border-radius: 99px;
+  border: 1.5px solid var(--accent);
+  background: #fff;
+  color: var(--primary);
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: var(--shadow-sm);
+}
+
+.sf-view-all-btn:hover {
+  background: var(--accent);
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.sf-view-all-btn:active {
+  transform: scale(0.97);
 }
