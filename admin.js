@@ -113,9 +113,9 @@ async function connectGitHub(silent = false) {
     $("btnReload").disabled = false;
     $("btnSave").disabled = false;
 
-    // Auto-collapse sidebar configuration on mobile devices after connection
+    // Auto-collapse sidebar configuration after connection
     const sidebar = document.querySelector(".sidebar");
-    if (sidebar && window.innerWidth <= 768) {
+    if (sidebar) {
       sidebar.classList.add("collapsed");
     }
 
