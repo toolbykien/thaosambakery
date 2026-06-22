@@ -16,6 +16,7 @@ let imageContent = ""; // Stores base64 data URI if uploaded locally
 let activeFilterTab = "all";
 let activeAdminTab = "products";
 let adminSearchQuery = "";
+let recentlySavedProducts = [];
 
 // Element Selector helper
 const $ = (id) => document.getElementById(id);
@@ -270,20 +271,34 @@ function switchAdminTab(tabName) {
   activeAdminTab = tabName;
 
   const tabBtnProducts = $("tabBtnProducts");
+  const tabBtnAddProduct = $("tabBtnAddProduct");
   const tabBtnCategories = $("tabBtnCategories");
+  
   const productsContent = $("productsTabContent");
+  const addProductContent = $("addProductTabContent");
   const categoriesContent = $("categoriesTabContent");
+
+  tabBtnProducts.classList.remove("active");
+  tabBtnAddProduct.classList.remove("active");
+  tabBtnCategories.classList.remove("active");
+
+  productsContent.style.display = "none";
+  addProductContent.style.display = "none";
+  categoriesContent.style.display = "none";
 
   if (tabName === "products") {
     tabBtnProducts.classList.add("active");
-    tabBtnCategories.classList.remove("active");
-    productsContent.style.display = "grid";
-    categoriesContent.style.display = "none";
+    productsContent.style.display = "block";
     renderProductsList();
-  } else {
-    tabBtnProducts.classList.remove("active");
+  } else if (tabName === "add-product") {
+    tabBtnAddProduct.classList.add("active");
+    addProductContent.style.display = "block";
+    const pane = $("recentlySavedPane");
+    if (pane) {
+      pane.style.display = recentlySavedProducts.length > 0 ? "block" : "none";
+    }
+  } else if (tabName === "categories") {
     tabBtnCategories.classList.add("active");
-    productsContent.style.display = "none";
     categoriesContent.style.display = "grid";
     renderCategoriesList();
   }
@@ -339,6 +354,9 @@ function handleFormSubmit(event) {
     return;
   }
 
+  let savedProduct = null;
+  let actionType = "add";
+
   if (editingProductId) {
     const prod = PRODUCTS.find(p => p.id === editingProductId);
     if (prod) {
@@ -346,24 +364,98 @@ function handleFormSubmit(event) {
       prod.cat = cat;
       prod.desc = desc;
       prod.img = imageContent;
+      savedProduct = prod;
+      actionType = "update";
       showToast(`Đã cập nhật: ${name}`);
     }
   } else {
     const newId = generateProductId();
     const productCode = generateProductCode();
-    PRODUCTS.push({
+    const newProd = {
       id: newId,
       cat: cat,
       name: name,
       code: productCode,
       desc: desc,
       img: imageContent
-    });
+    };
+    PRODUCTS.push(newProd);
+    savedProduct = newProd;
+    actionType = "add";
     showToast(`Đã thêm món mới: ${name} - ${productCode}`);
   }
 
   resetForm();
   renderProductsList();
+  if (savedProduct) {
+    // Prevent duplicate entries of the same product in history, keeping only the latest action
+    recentlySavedProducts = recentlySavedProducts.filter(item => item.product.id !== savedProduct.id);
+    recentlySavedProducts.unshift({
+      product: { ...savedProduct },
+      actionType: actionType,
+      timestamp: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+    });
+    renderRecentlySavedProductsList();
+  }
+}
+
+function renderRecentlySavedProductsList() {
+  const box = $("recentlySavedBox");
+  const pane = $("recentlySavedPane");
+  if (!box || !pane) return;
+
+  if (recentlySavedProducts.length === 0) {
+    pane.style.display = "none";
+    box.innerHTML = "";
+    return;
+  }
+
+  box.innerHTML = `
+    <div class="recently-saved-list">
+      ${recentlySavedProducts.map(item => {
+        const product = item.product;
+        const catObj = CATEGORIES.find(c => c.id === product.cat);
+        const catName = catObj ? catObj.name : "Món";
+        const actionLabel = item.actionType === 'add' ? 'Thêm mới' : 'Cập nhật';
+        const badgeClass = item.actionType === 'add' ? 'badge-add' : 'badge-update';
+
+        return `
+          <div class="recently-saved-item">
+            <div class="item-img-wrapper">
+              <img src="${product.img}" alt="${product.name}">
+            </div>
+            <div class="item-info">
+              <div>
+                <h4 class="item-title" title="${product.name}">${product.name}</h4>
+                <div class="item-meta">
+                  <span class="meta-badge meta-badge-code">Mã: ${product.code || product.id}</span>
+                  <span class="meta-badge meta-badge-cat">${catName}</span>
+                </div>
+              </div>
+              <div class="item-desc" title="${product.desc || ''}">
+                ${product.desc || "<em>Không có mô tả</em>"}
+              </div>
+            </div>
+            <div class="item-actions">
+              <span class="action-badge ${badgeClass}">${actionLabel}</span>
+              <div class="item-footer">
+                <span class="item-time">${item.timestamp}</span>
+                <button class="btn-icon btn-edit-icon" style="width: 24px; height: 24px; border-radius: 4px; font-size: 11px;" onclick="editProduct('${product.id}')" title="Sửa lại">
+                  ✏️
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join("")}
+    </div>
+  `;
+
+  pane.style.display = "block";
+}
+function clearRecentlySavedList() {
+  recentlySavedProducts = [];
+  renderRecentlySavedProductsList();
 }
 
 function generateProductCode() {
@@ -417,6 +509,13 @@ function resetForm() {
   handleCategoryChange();
 }
 
+function cancelProductEdit() {
+  resetForm();
+  const pane = $("recentlySavedPane");
+  if (pane) pane.style.display = "none";
+  switchAdminTab('products');
+}
+
 function editProduct(id) {
   const prod = PRODUCTS.find(p => p.id === id);
   if (!prod) return;
@@ -444,6 +543,7 @@ function editProduct(id) {
   $("btnCancelEdit").style.display = "inline-flex";
 
   handleCategoryChange();
+  switchAdminTab('add-product');
   $("productForm").scrollIntoView({ behavior: "smooth" });
 }
 
@@ -798,6 +898,7 @@ window.handleImageUrlInput = handleImageUrlInput;
 window.handleCategoryChange = handleCategoryChange;
 window.handleFormSubmit = handleFormSubmit;
 window.resetForm = resetForm;
+window.cancelProductEdit = cancelProductEdit;
 window.editProduct = editProduct;
 window.deleteProduct = deleteProduct;
 window.setFilterTab = setFilterTab;
@@ -810,3 +911,4 @@ window.handleCategoryFormSubmit = handleCategoryFormSubmit;
 window.resetCategoryForm = resetCategoryForm;
 window.editCategory = editCategory;
 window.deleteCategory = deleteCategory;
+window.clearRecentlySavedList = clearRecentlySavedList;
