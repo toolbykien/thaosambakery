@@ -1,7 +1,7 @@
 export const CATEGORIES = [
   {
     "id": "cake1",
-    "name": "🎂 Bánh Gato Sinh Nhật",
+    "name": "🎂 Bánh Sinh Nhật",
     "sizes": [
       {
         "label": "15cm",
@@ -27,7 +27,7 @@ export const CATEGORIES = [
   },
   {
     "id": "cake2",
-    "name": "☕ Bánh Gato Tiệc Cưới",
+    "name": "☕ Gato Tiệc Cưới",
     "sizes": [
       {
         "label": "50cm",
@@ -49,7 +49,7 @@ export const CATEGORIES = [
   },
   {
     "id": "cake3",
-    "name": "🧃 Bánh Gato Sự Kiện",
+    "name": "🧃 Gato Sự Kiện",
     "sizes": [
       {
         "label": "50cm",
@@ -71,7 +71,7 @@ export const CATEGORIES = [
   },
   {
     "id": "cake4",
-    "name": "☕ Bánh Gato Thường Ngày",
+    "name": "☕ Gato Thường Ngày",
     "sizes": [
       {
         "label": "50cm",
