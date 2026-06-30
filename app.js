@@ -449,24 +449,19 @@ window.adjustCustomizerQty = function (delta) {
 window.addCurrentToCart = function () {
   if (!currentProduct) return;
 
-  // Kiểm tra xem mặt hàng có cùng ID đã có trong giỏ hàng chưa
-  const existing = cart.find(item => item.id === currentProduct.id);
-
-  if (existing) {
-    existing.qty += currentQty;
-  } else {
-    cart.push({
-      id: currentProduct.id,
-      name: `${currentProduct.name} - ${currentProduct.code || currentProduct.id}`,
-      cat: currentProduct.cat,
-      img: currentProduct.img,
-      qty: currentQty
-    });
-  }
+  const cartItemId = Date.now() + "_" + Math.random().toString(36).substr(2, 9);
+  cart.push({
+    cartItemId: cartItemId,
+    id: currentProduct.id,
+    name: `${currentProduct.name} - ${currentProduct.code || currentProduct.id}`,
+    cat: currentProduct.cat,
+    img: currentProduct.img,
+    qty: 1
+  });
 
   saveCart();
   closeAllSheets();
-  showToast(`Đã thêm ${currentQty}x ${currentProduct.name} - ${currentProduct.code || currentProduct.id} vào giỏ hàng`);
+  showToast(`Đã thêm ${currentProduct.name} - ${currentProduct.code || currentProduct.id} vào giỏ hàng`);
 };
 
 /* ==========================================================================
@@ -532,29 +527,15 @@ function renderCartItems() {
           <h4 class="ci-name">${item.name}</h4>
         </div>
         <div class="ci-right">
-          <button class="ci-remove" onclick="removeCartItem('${item.id}'); event.stopPropagation();">Xóa</button>
+          <button class="ci-remove" onclick="removeCartItem('${item.cartItemId || item.id}'); event.stopPropagation();">Xóa</button>
         </div>
       </div>
     `).join("");
   }
 }
 
-window.adjustCartItemQty = function (id, delta) {
-  const item = cart.find(c => c.id === id);
-  if (!item) return;
-
-  item.qty += delta;
-  if (item.qty <= 0) {
-    cart = cart.filter(c => c.id !== id);
-  }
-
-  saveCart();
-  renderCartItems();
-  updateCartUI();
-};
-
-window.removeCartItem = function (id) {
-  cart = cart.filter(c => c.id !== id);
+window.removeCartItem = function (cartItemId) {
+  cart = cart.filter(c => (c.cartItemId || c.id) !== cartItemId);
   saveCart();
   renderCartItems();
   updateCartUI();
