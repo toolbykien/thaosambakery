@@ -1,27 +1,27 @@
 export const CATEGORIES = [
   {
     "id": "cake1",
-    "name": "🎂 Bé Trai"
+    "name": "👦 Bé Trai"
   },
   {
     "id": "cake2",
-    "name": "☕ Bé Gái"
+    "name": "👧 Bé Gái"
   },
   {
     "id": "cake3",
-    "name": "🧃 Nam Trẻ"
+    "name": "👱 Nam Trẻ"
   },
   {
     "id": "cake4",
-    "name": "☕ Nữ Trẻ"
+    "name": "👩 Nữ Trẻ"
   },
   {
     "id": "cake5",
-    "name": "🍞 Người Lớn Tuổi"
+    "name": "👵 Người Lớn Tuổi"
   },
   {
     "id": "cake6",
-    "name": "🍟 Đồ Ăn Vặt"
+    "name": "🍞 Bánh Mì"
   }
 ];
 
