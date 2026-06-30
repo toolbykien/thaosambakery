@@ -1,23 +1,23 @@
 export const CATEGORIES = [
   {
     "id": "cake1",
-    "name": "🎂 Bánh Sinh Nhật"
+    "name": "🎂 Bé Trai"
   },
   {
     "id": "cake2",
-    "name": "☕ Gato Tiệc Cưới"
+    "name": "☕ Bé Gái"
   },
   {
     "id": "cake3",
-    "name": "🧃 Gato Sự Kiện"
+    "name": "🧃 Nam Trẻ"
   },
   {
     "id": "cake4",
-    "name": "☕ Gato Thường Ngày"
+    "name": "☕ Nữ Trẻ"
   },
   {
     "id": "cake5",
-    "name": "🍞 Bánh Mì"
+    "name": "🍞 Người Lớn Tuổi"
   },
   {
     "id": "cake6",
