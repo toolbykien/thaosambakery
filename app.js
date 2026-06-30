@@ -269,16 +269,10 @@ function renderCategorySection(cat, filtered, isPreview = false, totalCount = fi
       <div class="card" id="card_${p.id}" onclick="openProductCustomizer('${p.id}')">
         <div class="card-img-box">
           <img src="${p.img}" alt="${p.name}" loading="lazy">
-          <span class="card-badge">${cat.name.split(" ")[1] || "mẫu"}</span>
         </div>
         <div class="card-body">
           <h4 class="card-name">${p.name} - ${p.code || p.id}</h4>
           <p class="card-desc">${p.desc || ""}</p>
-          <div class="card-foot">
-            <button class="add-btn" aria-label="Thêm vào giỏ" style="margin-left: auto;">
-              <svg viewBox="0 0 24 24" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-            </button>
-          </div>
         </div>
       </div>
     `;
@@ -441,7 +435,8 @@ window.openProductCustomizer = function (productId) {
 };
 
 function updateCustomizerPriceAndQuantity() {
-  $("qtyVal").textContent = currentQty;
+  const qtyVal = $("qtyVal");
+  if (qtyVal) qtyVal.textContent = currentQty;
   $("customizerAddBtn").innerHTML = `Thêm vào giỏ`;
 }
 
@@ -522,7 +517,7 @@ function renderCartItems() {
       <div class="cart-empty-box">
         <div class="cart-empty-icon">🛒</div>
         <h3>Giỏ hàng đang trống</h3>
-        <p>Rất nhiều bánh kem ngon và thức uống hấp dẫn đang chờ bạn.</p>
+        <p>Rất nhiều bánh kem ngon hấp dẫn đang chờ bạn.</p>
         <button class="btn-primary" style="margin-top:20px;" onclick="closeAllSheets(); scrollToMenu();">Xem menu ngay</button>
       </div>
     `;
@@ -531,18 +526,13 @@ function renderCartItems() {
     $("cartSheetFoot").style.display = "block";
 
     body.innerHTML = cart.map(item => `
-      <div class="cart-item">
+      <div class="cart-item" style="cursor: pointer;" onclick="openProductCustomizer('${item.id}')">
         <img class="ci-img" src="${item.img}" alt="${item.name}">
         <div class="ci-mid">
           <h4 class="ci-name">${item.name}</h4>
         </div>
         <div class="ci-right">
-          <button class="ci-remove" onclick="removeCartItem('${item.id}')">Xóa</button>
-          <div class="mini-qty-ctrl">
-            <button onclick="adjustCartItemQty('${item.id}', -1)">-</button>
-            <span class="qv">${item.qty}</span>
-            <button onclick="adjustCartItemQty('${item.id}', 1)">+</button>
-          </div>
+          <button class="ci-remove" onclick="removeCartItem('${item.id}'); event.stopPropagation();">Xóa</button>
         </div>
       </div>
     `).join("");

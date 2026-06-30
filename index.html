@@ -115,7 +115,8 @@
       <!-- ===================== SEARCH & FILTER BAR ===================== -->
       <section class="search-container">
         <div class="search-box">
-          <input type="text" id="searchInput" class="search-input" placeholder="Tìm kiếm bánh kem, cà phê, nước ép...">
+          <input type="text" id="searchInput" class="search-input"
+            placeholder="Tìm kiếm tên bánh, mã bánh, nguyên liệu, phụ kiện đi kèm,...">
           <svg class="search-icon" viewBox="0 0 24 24">
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
@@ -250,7 +251,7 @@
     <section class="sheet" id="productSheet">
       <div class="grip"></div>
       <div class="sheet-head">
-        <h3>Tùy chọn sản phẩm</h3>
+        <h3>Chi tiết sản phẩm</h3>
         <button class="sheet-close" onclick="closeAllSheets()">&times;</button>
       </div>
       <div class="sheet-body">
@@ -259,14 +260,6 @@
         <p class="psheet-desc" id="psheetDesc">Mô tả sản phẩm chi tiết sẽ hiển thị ở đây.</p>
 
 
-        <div class="qty-row">
-          <span class="qty-label">Số lượng</span>
-          <div class="qty-controller">
-            <button class="qty-btn" onclick="adjustCustomizerQty(-1)">-</button>
-            <span class="qty-value" id="qtyVal">1</span>
-            <button class="qty-btn" onclick="adjustCustomizerQty(1)">+</button>
-          </div>
-        </div>
       </div>
       <div class="sheet-foot">
         <button class="btn-primary" id="customizerAddBtn" onclick="addCurrentToCart()">Thêm vào giỏ</button>
