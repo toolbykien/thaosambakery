@@ -128,7 +128,6 @@ async function connectGitHub(silent = false) {
     // Initial renders
     renderCategorySelectOptions();
     renderFilterTabs();
-    handleCategoryChange();
     renderProductsList();
     renderCategoriesList();
   } catch (error) {
@@ -319,26 +318,7 @@ function renderCategorySelectOptions() {
 // ==========================================================================
 // FORM PRODUCTS CRUD HANDLERS
 // ==========================================================================
-function handleCategoryChange() {
-  const catId = $("prodCat").value;
-  const list = $("sizesPreviewList");
-  if (!list) return;
 
-  const catObj = CATEGORIES.find(c => c.id === catId);
-  const sizes = catObj ? (catObj.sizes || []) : [];
-
-  if (sizes.length === 0) {
-    list.innerHTML = `<div style="font-size:12px;color:var(--text-muted);">Không có kích cỡ nào được cấu hình cho danh mục này.</div>`;
-    return;
-  }
-
-  list.innerHTML = sizes.map(sz => `
-    <div class="size-preview-item">
-      <span>Cỡ: <strong>${sz.label}</strong></span>
-      <span>Giá: <strong>${formatPrice(sz.price)}</strong></span>
-    </div>
-  `).join("");
-}
 
 function handleFormSubmit(event) {
   event.preventDefault();
@@ -509,7 +489,6 @@ function resetForm() {
   $("btnCancelEdit").style.display = "none";
 
   resetImagePreview();
-  handleCategoryChange();
 }
 
 function cancelProductEdit() {
@@ -545,7 +524,6 @@ function editProduct(id) {
   $("btnSubmitForm").textContent = "Cập nhật sản phẩm";
   $("btnCancelEdit").style.display = "inline-flex";
 
-  handleCategoryChange();
   switchAdminTab('add-product');
   $("productForm").scrollIntoView({ behavior: "smooth" });
 }
@@ -567,57 +545,6 @@ function deleteProduct(id) {
 // ==========================================================================
 // CATEGORIES & SIZES CRUD HANDLERS
 // ==========================================================================
-function renderTempSizes() {
-  const container = $("tempSizesList");
-  if (!container) return;
-
-  if (tempSizes.length === 0) {
-    container.innerHTML = `<div style="font-size:12px;color:var(--text-muted);padding:8px 0;">Chưa thêm kích cỡ nào.</div>`;
-    return;
-  }
-
-  container.innerHTML = tempSizes.map((sz, index) => `
-    <div class="temp-size-badge">
-      <span>${sz.label} (${formatPrice(sz.price)})</span>
-      <button type="button" class="btn-remove-size" onclick="removeSizeFromTempList(${index})">&times;</button>
-    </div>
-  `).join("");
-}
-
-function addSizeToTempList() {
-  const labelInput = $("newSizeLabel");
-  const priceInput = $("newSizePrice");
-
-  const label = labelInput.value.trim();
-  const priceVal = priceInput.value.trim();
-
-  if (!label || !priceVal) {
-    showToast("Vui lòng điền nhãn và giá cho kích cỡ!");
-    return;
-  }
-
-  const price = parseInt(priceVal);
-  if (isNaN(price) || price < 0) {
-    showToast("Giá không hợp lệ!");
-    return;
-  }
-
-  if (tempSizes.some(s => s.label.toLowerCase() === label.toLowerCase())) {
-    showToast("Cỡ này đã được thêm!");
-    return;
-  }
-
-  tempSizes.push({ label, price });
-  labelInput.value = "";
-  priceInput.value = "";
-  renderTempSizes();
-}
-
-function removeSizeFromTempList(index) {
-  tempSizes.splice(index, 1);
-  renderTempSizes();
-}
-
 function renderCategoriesList() {
   const tbody = $("categoriesTableBody");
   if (!tbody) return;
@@ -625,7 +552,7 @@ function renderCategoriesList() {
   if (CATEGORIES.length === 0) {
     tbody.innerHTML = `
       <tr>
-        <td colspan="4" style="text-align: center; color: var(--text-muted); padding: 30px 0;">
+        <td colspan="3" style="text-align: center; color: var(--text-muted); padding: 30px 0;">
           Chưa có danh mục nào.
         </td>
       </tr>
@@ -634,10 +561,6 @@ function renderCategoriesList() {
   }
 
   tbody.innerHTML = CATEGORIES.map(cat => {
-    const sizesStr = cat.sizes && cat.sizes.length > 0
-      ? cat.sizes.map(sz => `${sz.label}: <strong>${formatPrice(sz.price)}</strong>`).join(", ")
-      : "<em style='color:var(--text-muted)'>Chưa có cỡ</em>";
-
     return `
       <tr>
         <td>
@@ -645,9 +568,6 @@ function renderCategoriesList() {
         </td>
         <td>
           <span class="t-name">${cat.name}</span>
-        </td>
-        <td>
-          <span style="font-size: 13px;">${sizesStr}</span>
         </td>
         <td>
           <div class="table-actions">
@@ -673,24 +593,17 @@ function handleCategoryFormSubmit(event) {
     return;
   }
 
-  if (tempSizes.length === 0) {
-    showToast("Danh mục phải có ít nhất 1 kích cỡ!");
-    return;
-  }
-
   if (editingCategoryId) {
     const cat = CATEGORIES.find(c => c.id === editingCategoryId);
     if (cat) {
       cat.name = name;
-      cat.sizes = [...tempSizes];
       showToast(`Đã cập nhật danh mục: ${name}`);
     }
   } else {
     const newId = generateCategoryId();
     CATEGORIES.push({
       id: newId,
-      name: name,
-      sizes: [...tempSizes]
+      name: name
     });
     showToast(`Đã thêm danh mục mới: ${name}`);
   }
@@ -713,18 +626,13 @@ function generateCategoryId() {
 
 function resetCategoryForm() {
   editingCategoryId = null;
-  tempSizes = [];
 
   $("catId").value = "";
   $("catName").value = "";
-  $("newSizeLabel").value = "";
-  $("newSizePrice").value = "";
 
   $("catFormTitle").textContent = "Thêm danh mục mới";
   $("btnSubmitCatForm").textContent = "Thêm danh mục";
   $("btnCancelCatEdit").style.display = "none";
-
-  renderTempSizes();
 }
 
 function editCategory(id) {
@@ -732,7 +640,6 @@ function editCategory(id) {
   if (!cat) return;
 
   editingCategoryId = id;
-  tempSizes = [...(cat.sizes || [])];
 
   $("catId").value = cat.id;
   $("catName").value = cat.name;
@@ -741,7 +648,6 @@ function editCategory(id) {
   $("btnSubmitCatForm").textContent = "Cập nhật danh mục";
   $("btnCancelCatEdit").style.display = "inline-flex";
 
-  renderTempSizes();
   $("categoryForm").scrollIntoView({ behavior: "smooth" });
 }
 
@@ -954,7 +860,6 @@ window.reloadProducts = reloadProducts;
 window.saveChanges = saveChanges;
 window.handleImageFile = handleImageFile;
 window.handleImageUrlInput = handleImageUrlInput;
-window.handleCategoryChange = handleCategoryChange;
 window.handleFormSubmit = handleFormSubmit;
 window.resetForm = resetForm;
 window.cancelProductEdit = cancelProductEdit;
@@ -964,8 +869,6 @@ window.setFilterTab = setFilterTab;
 window.toggleSidebarConfig = toggleSidebarConfig;
 
 window.switchAdminTab = switchAdminTab;
-window.addSizeToTempList = addSizeToTempList;
-window.removeSizeFromTempList = removeSizeFromTempList;
 window.handleCategoryFormSubmit = handleCategoryFormSubmit;
 window.resetCategoryForm = resetCategoryForm;
 window.editCategory = editCategory;

@@ -1,155 +1,27 @@
 export const CATEGORIES = [
   {
     "id": "cake1",
-    "name": "🎂 Bánh Sinh Nhật",
-    "sizes": [
-      {
-        "label": "15cm",
-        "price": 150000
-      },
-      {
-        "label": "18cm",
-        "price": 180000
-      },
-      {
-        "label": "20cm",
-        "price": 200000
-      },
-      {
-        "label": "22cm",
-        "price": 220000
-      },
-      {
-        "label": "25cm",
-        "price": 250000
-      }
-    ]
+    "name": "🎂 Bánh Sinh Nhật"
   },
   {
     "id": "cake2",
-    "name": "☕ Gato Tiệc Cưới",
-    "sizes": [
-      {
-        "label": "50cm",
-        "price": 550000
-      },
-      {
-        "label": "55CM",
-        "price": 500000
-      },
-      {
-        "label": "60CM",
-        "price": 520000
-      },
-      {
-        "label": "65CM",
-        "price": 550000
-      }
-    ]
+    "name": "☕ Gato Tiệc Cưới"
   },
   {
     "id": "cake3",
-    "name": "🧃 Gato Sự Kiện",
-    "sizes": [
-      {
-        "label": "50cm",
-        "price": 550000
-      },
-      {
-        "label": "55CM",
-        "price": 500000
-      },
-      {
-        "label": "60CM",
-        "price": 520000
-      },
-      {
-        "label": "65CM",
-        "price": 550000
-      }
-    ]
+    "name": "🧃 Gato Sự Kiện"
   },
   {
     "id": "cake4",
-    "name": "☕ Gato Thường Ngày",
-    "sizes": [
-      {
-        "label": "50cm",
-        "price": 550000
-      },
-      {
-        "label": "55CM",
-        "price": 500000
-      },
-      {
-        "label": "60CM",
-        "price": 520000
-      },
-      {
-        "label": "65CM",
-        "price": 550000
-      }
-    ]
+    "name": "☕ Gato Thường Ngày"
   },
   {
     "id": "cake5",
-    "name": "🍞 Bánh Mì",
-    "sizes": [
-      {
-        "label": "1",
-        "price": 3000
-      },
-      {
-        "label": "2",
-        "price": 5000
-      },
-      {
-        "label": "10",
-        "price": 25000
-      }
-    ]
+    "name": "🍞 Bánh Mì"
   },
   {
     "id": "cake6",
-    "name": "🍟 Đồ Ăn Vặt",
-    "sizes": [
-      {
-        "label": "Bim Bim",
-        "price": 10000
-      },
-      {
-        "label": "Xúc Xích",
-        "price": 15000
-      },
-      {
-        "label": "Thạch",
-        "price": 10000
-      },
-      {
-        "label": "Bánh mì",
-        "price": 5000
-      },
-      {
-        "label": "Kem",
-        "price": 12000
-      },
-      {
-        "label": "Chân gà",
-        "price": 15000
-      },
-      {
-        "label": "Lạp xưởng",
-        "price": 15000
-      },
-      {
-        "label": "Bánh kem",
-        "price": 17000
-      },
-      {
-        "label": "Bánh mì xúc xích",
-        "price": 15000
-      }
-    ]
+    "name": "🍟 Đồ Ăn Vặt"
   }
 ];
 

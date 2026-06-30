@@ -241,7 +241,6 @@
         <path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"></path>
       </svg>
       <span class="cf-count" id="cfCount">0</span>
-      <span class="cf-total" id="cfTotal">0đ</span>
     </button>
 
     <!-- ===================== OVERLAY SHADOW ===================== -->
@@ -259,10 +258,6 @@
         <h3 class="psheet-name" id="psheetName">Tên món bánh</h3>
         <p class="psheet-desc" id="psheetDesc">Mô tả sản phẩm chi tiết sẽ hiển thị ở đây.</p>
 
-        <div class="option-group-label">Chọn kích cỡ</div>
-        <div class="size-grid" id="sizeGrid">
-          <!-- Dynamic size buttons render here -->
-        </div>
 
         <div class="qty-row">
           <span class="qty-label">Số lượng</span>
@@ -289,13 +284,7 @@
         <!-- Cart list rendered dynamically -->
       </div>
       <div class="sheet-foot" id="cartSheetFoot">
-        <div class="summary-container">
-          <div class="sum-line total">
-            <span>Tổng số tiền:</span>
-            <span class="val" id="cartTotalVal">0đ</span>
-          </div>
-        </div>
-        <button class="btn-primary" style="margin-top: 14px;" onclick="openCheckout()">Tiếp tục đặt hàng</button>
+        <button class="btn-primary" onclick="openCheckout()">Tiếp tục đặt hàng</button>
       </div>
     </section>
 

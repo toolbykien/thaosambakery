@@ -265,20 +265,6 @@ function renderStorefrontPaginationBar(totalCount, totalPages, startIndex, endIn
 // Helper to render a category section
 function renderCategorySection(cat, filtered, isPreview = false, totalCount = filtered.length) {
   const cardHtml = filtered.map(p => {
-    let sizeText = "";
-    let priceNum = 0;
-
-    const catObj = CATEGORIES.find(c => c.id === p.cat);
-    if (catObj && catObj.sizes && catObj.sizes.length > 0) {
-      const minSz = catObj.sizes[0].label;
-      const maxSz = catObj.sizes[catObj.sizes.length - 1].label;
-      sizeText = catObj.sizes.length > 1 ? `Cỡ ${minSz} - ${maxSz}` : `Cỡ ${minSz}`;
-      priceNum = catObj.sizes[0].price;
-    } else {
-      sizeText = "Liên hệ";
-      priceNum = 0;
-    }
-
     return `
       <div class="card" id="card_${p.id}" onclick="openProductCustomizer('${p.id}')">
         <div class="card-img-box">
@@ -289,11 +275,7 @@ function renderCategorySection(cat, filtered, isPreview = false, totalCount = fi
           <h4 class="card-name">${p.name} - ${p.code || p.id}</h4>
           <p class="card-desc">${p.desc || ""}</p>
           <div class="card-foot">
-            <div class="card-price-info">
-              <small>${sizeText}</small>
-              <span class="card-price">${formatPrice(priceNum)}</span>
-            </div>
-            <button class="add-btn" aria-label="Thêm vào giỏ">
+            <button class="add-btn" aria-label="Thêm vào giỏ" style="margin-left: auto;">
               <svg viewBox="0 0 24 24" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
             </button>
           </div>
@@ -448,46 +430,19 @@ window.openProductCustomizer = function (productId) {
   currentProduct = product;
   currentQty = 1;
 
-  // Xác định bộ tùy chọn kích thước dựa trên danh mục
-  const catObj = CATEGORIES.find(c => c.id === product.cat);
-  const sizeOptions = catObj ? (catObj.sizes || []) : [];
-
-  // Chọn trước tùy chọn kích thước đầu tiên
-  selectedSize = sizeOptions[0];
-
   // Hiển thị chi tiết sản phẩm bên trong trang tùy chỉnh
   $("psheetImg").src = product.img;
   $("psheetImg").alt = `${product.name} - ${product.code || product.id}`;
   $("psheetName").textContent = `${product.name} - ${product.code || product.id}`;
   $("psheetDesc").textContent = product.desc || "Hương vị thơm ngon, chế biến tươi mới trong ngày.";
 
-  // Bộ chọn tùy chọn kích thước hiển thị
-  const sizeGrid = $("sizeGrid");
-  sizeGrid.innerHTML = sizeOptions.map((sz, index) => `
-    <button class="size-opt ${index === 0 ? 'active' : ''}" onclick="selectCustomizerSize('${sz.label}', ${sz.price}, this)">
-      <span class="opt-lbl">${sz.label}</span>
-      <span class="opt-price">${formatPrice(sz.price)}</span>
-    </button>
-  `).join("");
-
   updateCustomizerPriceAndQuantity();
   openSheet("productSheet");
 };
 
-window.selectCustomizerSize = function (label, price, element) {
-  selectedSize = { label, price };
-
-  // cập nhật trạng thái hoạt động UI
-  document.querySelectorAll(".size-opt").forEach(opt => opt.classList.remove("active"));
-  element.classList.add("active");
-
-  updateCustomizerPriceAndQuantity();
-};
-
 function updateCustomizerPriceAndQuantity() {
   $("qtyVal").textContent = currentQty;
-  const totalPrice = selectedSize.price * currentQty;
-  $("customizerAddBtn").innerHTML = `Thêm vào giỏ • ${formatPrice(totalPrice)}`;
+  $("customizerAddBtn").innerHTML = `Thêm vào giỏ`;
 }
 
 window.adjustCustomizerQty = function (delta) {
@@ -497,10 +452,10 @@ window.adjustCustomizerQty = function (delta) {
 };
 
 window.addCurrentToCart = function () {
-  if (!currentProduct || !selectedSize) return;
+  if (!currentProduct) return;
 
-  // Kiểm tra xem mặt hàng có cùng ID và kích thước đã có trong giỏ hàng chưa
-  const existing = cart.find(item => item.id === currentProduct.id && item.size === selectedSize.label);
+  // Kiểm tra xem mặt hàng có cùng ID đã có trong giỏ hàng chưa
+  const existing = cart.find(item => item.id === currentProduct.id);
 
   if (existing) {
     existing.qty += currentQty;
@@ -510,8 +465,6 @@ window.addCurrentToCart = function () {
       name: `${currentProduct.name} - ${currentProduct.code || currentProduct.id}`,
       cat: currentProduct.cat,
       img: currentProduct.img,
-      size: selectedSize.label,
-      price: selectedSize.price,
       qty: currentQty
     });
   }
@@ -534,7 +487,6 @@ function getCartCount() {
 
 function updateCartUI() {
   const count = getCartCount();
-  const total = getCartTotal();
 
   // Topbar Cart Badge
   const tbBadge = $("tbBadge");
@@ -550,7 +502,6 @@ function updateCartUI() {
   // Chỉ hiển thị nếu giỏ hàng không trống và không có trang nào mở
   if (count > 0 && !document.querySelector(".sheet.show")) {
     $("cfCount").textContent = count;
-    $("cfTotal").textContent = formatPrice(total);
     cartFab.classList.add("show");
   } else {
     cartFab.classList.remove("show");
@@ -565,7 +516,6 @@ window.openCart = function () {
 function renderCartItems() {
   const body = $("cartBody");
   const count = getCartCount();
-  const total = getCartTotal();
 
   if (count === 0) {
     body.innerHTML = `
@@ -579,22 +529,19 @@ function renderCartItems() {
     $("cartSheetFoot").style.display = "none";
   } else {
     $("cartSheetFoot").style.display = "block";
-    $("cartTotalVal").textContent = formatPrice(total);
 
     body.innerHTML = cart.map(item => `
       <div class="cart-item">
         <img class="ci-img" src="${item.img}" alt="${item.name}">
         <div class="ci-mid">
           <h4 class="ci-name">${item.name}</h4>
-          <div class="ci-size">Cỡ: ${item.size}</div>
-          <div class="ci-price">${formatPrice(item.price)}</div>
         </div>
         <div class="ci-right">
-          <button class="ci-remove" onclick="removeCartItem('${item.id}', '${item.size}')">Xóa</button>
+          <button class="ci-remove" onclick="removeCartItem('${item.id}')">Xóa</button>
           <div class="mini-qty-ctrl">
-            <button onclick="adjustCartItemQty('${item.id}', '${item.size}', -1)">-</button>
+            <button onclick="adjustCartItemQty('${item.id}', -1)">-</button>
             <span class="qv">${item.qty}</span>
-            <button onclick="adjustCartItemQty('${item.id}', '${item.size}', 1)">+</button>
+            <button onclick="adjustCartItemQty('${item.id}', 1)">+</button>
           </div>
         </div>
       </div>
@@ -602,13 +549,13 @@ function renderCartItems() {
   }
 }
 
-window.adjustCartItemQty = function (id, size, delta) {
-  const item = cart.find(c => c.id === id && c.size === size);
+window.adjustCartItemQty = function (id, delta) {
+  const item = cart.find(c => c.id === id);
   if (!item) return;
 
   item.qty += delta;
   if (item.qty <= 0) {
-    cart = cart.filter(c => !(c.id === id && c.size === size));
+    cart = cart.filter(c => c.id !== id);
   }
 
   saveCart();
@@ -616,8 +563,8 @@ window.adjustCartItemQty = function (id, size, delta) {
   updateCartUI();
 };
 
-window.removeCartItem = function (id, size) {
-  cart = cart.filter(c => !(c.id === id && c.size === size));
+window.removeCartItem = function (id) {
+  cart = cart.filter(c => c.id !== id);
   saveCart();
   renderCartItems();
   updateCartUI();
@@ -786,7 +733,7 @@ window.submitOrderForm = function () {
 };
 
 function generateOrderText() {
-  const itemsText = cart.map(c => `• ${c.name} (${c.size}) x${c.qty} = ${formatPrice(c.price * c.qty)}`);
+  const itemsText = cart.map(c => `• ${c.name} x${c.qty}`);
   let fulfillmentDetails = "";
 
   if (fulfillmentType === "table") {
@@ -804,14 +751,13 @@ function generateOrderText() {
     if (note) fulfillmentDetails += `\n📝 Ghi chú: ${note}`;
   }
 
-  return `🎂 ĐƠN HÀNG THẢO SÂM BAKERY\n\n${itemsText.join("\n")}\n\n💰 TỔNG CỘNG: ${formatPrice(getCartTotal())}\n\n${fulfillmentDetails}`;
+  return `🎂 ĐƠN HÀNG THẢO SÂM BAKERY\n\n${itemsText.join("\n")}\n\n${fulfillmentDetails}`;
 }
 
 function showOrderSuccess(orderText) {
   const summaryList = cart.map(c => `
     <div class="od-item-line">
-      <span>${c.name} (Cỡ ${c.size}) ×${c.qty}</span>
-      <span>${formatPrice(c.price * c.qty)}</span>
+      <span>${c.name} ×${c.qty}</span>
     </div>
   `).join("");
 
@@ -842,10 +788,6 @@ function showOrderSuccess(orderText) {
         ${destination}
         <hr>
         ${summaryList}
-        <div class="od-item-line" style="font-weight:700; margin-top:8px;">
-          <span>Tổng cộng</span>
-          <span style="color:var(--red-cta)">${formatPrice(getCartTotal())}</span>
-        </div>
       </div>
     </div>
   `;

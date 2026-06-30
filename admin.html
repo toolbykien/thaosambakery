@@ -146,7 +146,7 @@
 
                 <div class="form-group">
                   <label for="prodCat">Danh mục <span class="required">*</span></label>
-                  <select id="prodCat" required onchange="handleCategoryChange()">
+                  <select id="prodCat" required>
                     <!-- Dynamic categories option list loaded here -->
                   </select>
                 </div>
@@ -169,13 +169,6 @@
                   </div>
                 </div>
 
-                <div class="form-group" id="sizesConfigContainer">
-                  <label>Xem trước các cỡ và giá sẽ áp dụng:</label>
-                  <div class="sizes-preview-list" id="sizesPreviewList">
-                    <!-- Sizes based on categories will show here -->
-                  </div>
-                  <small class="hint">Các mức giá cỡ bánh được cấu hình tự động dựa trên danh mục đã chọn.</small>
-                </div>
 
                 <div class="form-actions">
                   <button type="submit" class="btn btn-primary" id="btnSubmitForm">Thêm sản phẩm</button>
@@ -210,25 +203,6 @@
                 <input type="text" id="catName" required placeholder="Ví dụ: 🎂 Bánh Kem Phô Mai">
               </div>
 
-              <div class="form-group">
-                <label>Kích cỡ & Giá bán <span class="required">*</span></label>
-                <div class="sizes-manager-box">
-                  <div class="sizes-input-fields">
-                    <div class="size-field-col">
-                      <input type="text" id="newSizeLabel" placeholder="Cỡ (vd: M, L, 20cm)">
-                    </div>
-                    <div class="size-field-col">
-                      <input type="number" id="newSizePrice" placeholder="Giá (vd: 35000)">
-                    </div>
-                  </div>
-                  <button type="button" class="btn btn-secondary btn-block" onclick="addSizeToTempList()">
-                    ➕ Thêm kích cỡ
-                  </button>
-                  <div class="temp-sizes-list" id="tempSizesList">
-                    <!-- Sizes list rendered dynamically -->
-                  </div>
-                </div>
-              </div>
 
               <div class="form-actions">
                 <button type="submit" class="btn btn-primary" id="btnSubmitCatForm">Thêm danh mục</button>
@@ -246,7 +220,6 @@
                   <tr>
                     <th>ID</th>
                     <th>Tên danh mục</th>
-                    <th>Kích cỡ & Giá bán</th>
                     <th style="text-align: right;">Hành động</th>
                   </tr>
                 </thead>
